@@ -1,45 +1,70 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { handleWatchlist, add, remove } from './watchlistSlice';
+import axios from 'axios';
 
 export const moviesNowPlayingSlice = createSlice({
-  name: 'movies',
+  name: 'moviesNowPlaying',
   initialState: {
     movies: [],
-    loading: false,
+    pages: null,
+    status: 'idle',
     error: null
   },
   reducers: {
-    add: (state, { payload }) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      const newTodo = payload;
-      state.todos.push(newTodo);
-    },
-    remove: (state, action) => {
-      const index = state.todos.findIndex(todo => todo.id === action.payload);
-      state.todos.splice(index, 1);
-    },
     toggle: (state, action) => {
-      const todo = state.todos.find(todo => todo.id === action.payload);
-      todo.completed = !todo.completed;
+      // const movie = action.payload;
+      // movie.watchlisted = !movie.watchlisted;
+
+      const { id } = action.payload;
+      const movieToToggle = state.movies.find(movie => movie.id === id);
+      if (movieToToggle) {
+        movieToToggle.watchlisted = !movieToToggle.watchlisted;
+      }
+
+      // const { id } = action.payload;
+      // const movieToToggle = state.movies.find(movie => movie.id === id);
+      // // console.log(movieToToggle);
+      // if (movieToToggle) {
+      //   movieToToggle.watchlisted = !movieToToggle.watchlisted;
+      // }
+
+      // console.log('about to call handleWatchlist');
+      // handleWatchlist(movieToToggle);
     },
     startFetching: state => {
-      state.loading = true;
+      state.status = 'loading';
     },
-    getNowPlayingSuccess: (state, action) => {
-      const { results } = action.payload;
-      state.movies = results;
-      state.loading = false;
+    getNowPlayingSuccess: {
+      reducer(state, action) {
+        const { results, total_pages } = action.payload;
+        state.movies = results;
+        state.pages = total_pages;
+        state.status = 'success';
+      },
+      prepare(moviesObject) {
+        // Destructure results, add 'watchlisted'
+        // property to movie objects
+        const { results } = moviesObject;
+        const newResults = results.map(movie => ({
+          watchlisted: false,
+          ...movie
+        }));
+        // Merge movie array with the rest of the
+        // movie object (includes pagination, etc.)
+        const newMovieObject = { ...moviesObject, results: newResults };
+        return { payload: newMovieObject };
+      }
     },
     getNowPlayingFailed: (state, action) => {
+      console.log(action.payload);
       state.error = action.payload;
-      state.loading = false;
+      state.status = 'failure';
     }
   }
 });
 
 export const {
+  toggle,
   startFetching,
   getNowPlayingFailed,
   getNowPlayingSuccess
@@ -50,16 +75,28 @@ export const {
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
 
-export const fetchMovies = () => async dispatch => {
+/***  THUNKS  ***/
+// Fetch Movies
+export const fetchMovies = page => async dispatch => {
+  dispatch(startFetching());
   try {
-    dispatch(startFetching());
-    const data = await fetch('/movies/nowplaying');
-    const movies = await data.json();
-    dispatch(getNowPlayingSuccess(movies));
-    // console.log(movies);
-  } catch (error) {
-    dispatch(getNowPlayingFailed(error));
-    console.log(error);
+    const response = await axios.get(`/movies/nowplaying/${page}`);
+    dispatch(getNowPlayingSuccess(response.data));
+  } catch (err) {
+    console.log(err);
+    dispatch(getNowPlayingFailed(err.message));
+  }
+};
+
+// Toggle watchlisted property / Handle watchlist
+export const toggleWatchlist = selectedMovie => async dispatch => {
+  dispatch(toggle(selectedMovie));
+
+  // Add/remove logic inversed because of toggle
+  if (selectedMovie.watchlisted) {
+    dispatch(remove(selectedMovie));
+  } else {
+    dispatch(add(selectedMovie));
   }
 };
 
@@ -68,8 +105,10 @@ export const fetchMovies = () => async dispatch => {
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 
 export const moviesNowPlayingState = state => ({
-  movies: state.moviesNowPlaying.movies,
-  loading: state.moviesNowPlaying.loading
+  moviesNowPlaying: state.moviesNowPlaying.movies,
+  pages: state.moviesNowPlaying.pages,
+  status: state.moviesNowPlaying.status,
+  currentPage: state.moviesNowPlaying.currentPage
 });
 
 export default moviesNowPlayingSlice.reducer;
