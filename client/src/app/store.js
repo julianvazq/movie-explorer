@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import watchlistReducer from '../features/movies/watchlistSlice';
-import moviesNowPlayingReducer from '../features/movies/moviesNowPlayingSlice';
+import watchlistReducer from '../features/movies/slices/watchlistSlice';
+import moviesNowPlayingReducer from '../features/movies/slices/moviesNowPlayingSlice';
 
 export default configureStore({
   reducer: {

@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { handleWatchlist, add, remove } from './watchlistSlice';
+import { add, remove } from './watchlistSlice';
 import axios from 'axios';
 
 export const moviesNowPlayingSlice = createSlice({
-  name: 'moviesNowPlaying',
+  name: 'NOW_PLAYING_MOVIES',
   initialState: {
     movies: [],
     pages: null,
@@ -12,29 +12,16 @@ export const moviesNowPlayingSlice = createSlice({
   },
   reducers: {
     toggle: (state, action) => {
-      // const movie = action.payload;
-      // movie.watchlisted = !movie.watchlisted;
-
       const { id } = action.payload;
       const movieToToggle = state.movies.find(movie => movie.id === id);
       if (movieToToggle) {
         movieToToggle.watchlisted = !movieToToggle.watchlisted;
       }
-
-      // const { id } = action.payload;
-      // const movieToToggle = state.movies.find(movie => movie.id === id);
-      // // console.log(movieToToggle);
-      // if (movieToToggle) {
-      //   movieToToggle.watchlisted = !movieToToggle.watchlisted;
-      // }
-
-      // console.log('about to call handleWatchlist');
-      // handleWatchlist(movieToToggle);
     },
     startFetching: state => {
       state.status = 'loading';
     },
-    getNowPlayingSuccess: {
+    fetchingSuccess: {
       reducer(state, action) {
         const { results, total_pages } = action.payload;
         state.movies = results;
@@ -55,7 +42,7 @@ export const moviesNowPlayingSlice = createSlice({
         return { payload: newMovieObject };
       }
     },
-    getNowPlayingFailed: (state, action) => {
+    fetchingFailed: (state, action) => {
       console.log(action.payload);
       state.error = action.payload;
       state.status = 'failure';
@@ -66,8 +53,8 @@ export const moviesNowPlayingSlice = createSlice({
 export const {
   toggle,
   startFetching,
-  getNowPlayingFailed,
-  getNowPlayingSuccess
+  fetchingFailed,
+  fetchingSuccess
 } = moviesNowPlayingSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -81,14 +68,14 @@ export const fetchMovies = page => async dispatch => {
   dispatch(startFetching());
   try {
     const response = await axios.get(`/movies/nowplaying/${page}`);
-    dispatch(getNowPlayingSuccess(response.data));
+    dispatch(fetchingSuccess(response.data));
   } catch (err) {
     console.log(err);
-    dispatch(getNowPlayingFailed(err.message));
+    dispatch(startFetching(err.message));
   }
 };
 
-// Toggle watchlisted property / Handle watchlist
+// Toggle watchlisted property | Add/remove watchlist
 export const toggleWatchlist = selectedMovie => async dispatch => {
   dispatch(toggle(selectedMovie));
 
@@ -107,8 +94,7 @@ export const toggleWatchlist = selectedMovie => async dispatch => {
 export const moviesNowPlayingState = state => ({
   moviesNowPlaying: state.moviesNowPlaying.movies,
   pages: state.moviesNowPlaying.pages,
-  status: state.moviesNowPlaying.status,
-  currentPage: state.moviesNowPlaying.currentPage
+  status: state.moviesNowPlaying.status
 });
 
 export default moviesNowPlayingSlice.reducer;

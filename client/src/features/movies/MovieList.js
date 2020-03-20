@@ -4,8 +4,8 @@ import {
   moviesNowPlayingState,
   fetchMovies,
   toggleWatchlist
-} from './moviesNowPlayingSlice';
-import { handleWatchlist, watchlistState } from './watchlistSlice';
+} from './slices/moviesNowPlayingSlice';
+import { handleWatchlist, watchlistState } from './slices/watchlistSlice';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
 
@@ -54,6 +54,12 @@ const MovieList = () => {
             Watchlisted: {movie.watchlisted ? 'YES' : 'NO'}
           </div>
         ))}
+        <h2>Watchlist</h2>
+        <div>
+          {watchlist.map(movie => (
+            <p>{movie.title}</p>
+          ))}
+        </div>
       </div>
     );
   }
