@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  moviesNowPlayingState,
+  nowPlayingMoviesState,
   fetchMovies,
   toggleWatchlist
-} from './slices/moviesNowPlayingSlice';
-import { handleWatchlist, watchlistState } from './slices/watchlistSlice';
+} from './slices/nowPlayingMoviesSlice';
+import { watchlistState } from './slices/watchlistSlice';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
 
@@ -17,7 +17,7 @@ const CustomButton = styled(Button)`
 
 const MovieList = () => {
   const { moviesNowPlaying, pages, status } = useSelector(
-    moviesNowPlayingState
+    nowPlayingMoviesState
   );
   const { watchlist } = useSelector(watchlistState);
 

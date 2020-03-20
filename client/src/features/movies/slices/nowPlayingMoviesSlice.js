@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { add, remove } from './watchlistSlice';
 import axios from 'axios';
 
-export const moviesNowPlayingSlice = createSlice({
+export const nowPlayingMoviesSlice = createSlice({
   name: 'NOW_PLAYING_MOVIES',
   initialState: {
     movies: [],
@@ -55,7 +55,7 @@ export const {
   startFetching,
   fetchingFailed,
   fetchingSuccess
-} = moviesNowPlayingSlice.actions;
+} = nowPlayingMoviesSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -91,10 +91,10 @@ export const toggleWatchlist = selectedMovie => async dispatch => {
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 
-export const moviesNowPlayingState = state => ({
+export const nowPlayingMoviesState = state => ({
   moviesNowPlaying: state.moviesNowPlaying.movies,
   pages: state.moviesNowPlaying.pages,
   status: state.moviesNowPlaying.status
 });
 
-export default moviesNowPlayingSlice.reducer;
+export default nowPlayingMoviesSlice.reducer;

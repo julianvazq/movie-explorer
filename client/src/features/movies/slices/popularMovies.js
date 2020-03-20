@@ -21,7 +21,7 @@ export const popularMoviesSlice = createSlice({
     startFetching: state => {
       state.status = 'loading';
     },
-    getNowPlayingSuccess: {
+    fetchingSuccess: {
       reducer(state, action) {
         const { results, total_pages } = action.payload;
         state.movies = results;
@@ -42,7 +42,7 @@ export const popularMoviesSlice = createSlice({
         return { payload: newMovieObject };
       }
     },
-    getNowPlayingFailed: (state, action) => {
+    fetchingFailed: (state, action) => {
       console.log(action.payload);
       state.error = action.payload;
       state.status = 'failure';
@@ -53,8 +53,8 @@ export const popularMoviesSlice = createSlice({
 export const {
   toggle,
   startFetching,
-  getNowPlayingFailed,
-  getNowPlayingSuccess
+  fetchingFailed,
+  fetchingSuccess
 } = moviesNowPlayingSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -68,10 +68,10 @@ export const fetchMovies = page => async dispatch => {
   dispatch(startFetching());
   try {
     const response = await axios.get(`/movies/nowplaying/${page}`);
-    dispatch(getNowPlayingSuccess(response.data));
+    dispatch(fetchingSuccess(response.data));
   } catch (err) {
     console.log(err);
-    dispatch(getNowPlayingFailed(err.message));
+    dispatch(fetchingFailed(err.message));
   }
 };
 
@@ -93,8 +93,8 @@ export const toggleWatchlist = selectedMovie => async dispatch => {
 
 export const popularMovies = state => ({
   popularMovies: state.popularMovies.movies,
-  pages: state.moviesNowPlaying.pages,
-  status: state.moviesNowPlaying.status
+  pages: state.popularMovies.pages,
+  status: state.popularMovies.status
 });
 
-export default moviesNowPlayingSlice.reducer;
+export default popularMoviesSlice.reducer;
