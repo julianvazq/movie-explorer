@@ -1,13 +1,27 @@
 import React from 'react';
-import MovieList from './features/movies/MovieList';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import MovieList from './features/movies/MovieList';
 import './App.css';
+import AppNavbar from './common/AppNavBar';
+import Home from './common/Home';
+import Watchlist from './common/Watchlist';
 
-function App() {
+const App = () => {
   return (
-    <div className='App'>
-      <MovieList />
-    </div>
+    <Router>
+      <AppNavbar />
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/watchlist' exact component={Watchlist} />
+        <Route
+          render={() => (
+            <h2 style={{ textAlign: 'center' }}>404 Page Not Found</h2>
+          )}
+        />
+      </Switch>
+      {/* <MovieList /> */}
+    </Router>
   );
-}
+};
 
 export default App;

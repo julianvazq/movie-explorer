@@ -10,7 +10,7 @@ import {
   fetchPopularMovies,
   toggleWatchlistPopular
 } from './slices/popularMoviesSlice';
-import { watchlistState } from './slices/watchlistSlice';
+import { watchlistState, remove } from './slices/watchlistSlice';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
 
@@ -48,7 +48,7 @@ const MovieList = () => {
         <h2>Watchlist</h2>
         <div>
           {watchlist.map(movie => (
-            <p>{movie.title}</p>
+            <p onClick={() => dispatch(remove(movie))}>{movie.title}</p>
           ))}
         </div>
         <CustomButton color='primary'>primary</CustomButton>

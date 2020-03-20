@@ -92,7 +92,7 @@ export const toggleWatchlistPopular = selectedMovie => async dispatch => {
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 
 export const popularMoviesState = state => ({
-  popularMovies: state.popularMovies.movies,
+  movies: state.popularMovies.movies,
   pages: state.popularMovies.pages,
   status: state.popularMovies.status
 });
