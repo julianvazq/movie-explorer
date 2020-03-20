@@ -12,7 +12,10 @@ const MovieCard = ({ movie }) => {
   const { id } = movie;
 
   //   console.log(movie);
-  return <div>{movie.title}</div>;
+  return (
+    // <div onClick={() => dispatch(toggleWatchlistNowPlaying(movie))}>
+    <div>{movie.title}</div>
+  );
 };
 
 export default MovieCard;

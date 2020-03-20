@@ -31,6 +31,14 @@ export const setFailure = (state, action) => {
   state.status = 'failure';
 };
 
+// Fetching success
+export const requestSuccess = (state, action) => {
+  const { results, total_pages } = action.payload;
+  state.movies = results;
+  state.pages = total_pages;
+  state.status = 'success';
+};
+
 // Returns designated fetch to component
 export const determineFetch = type => {
   switch (type) {

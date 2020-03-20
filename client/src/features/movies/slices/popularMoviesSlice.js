@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { add, remove } from './watchlistSlice';
+import {
+  setLoading,
+  setFailure,
+  handleToggle,
+  requestSuccess
+} from './ReusableLogic';
 import axios from 'axios';
 
 export const popularMoviesSlice = createSlice({

@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { add, remove } from './watchlistSlice';
-import { setLoading, setFailure } from './ReusableLogic';
+import {
+  setLoading,
+  setFailure,
+  handleToggle,
+  requestSuccess
+} from './ReusableLogic';
 import axios from 'axios';
 
 export const nowPlayingMoviesSlice = createSlice({
@@ -12,43 +17,10 @@ export const nowPlayingMoviesSlice = createSlice({
     error: null
   },
   reducers: {
-    toggle: (state, action) => {
-      const { id } = action.payload;
-      const movieToToggle = state.movies.find(movie => movie.id === id);
-      if (movieToToggle) {
-        movieToToggle.watchlisted = !movieToToggle.watchlisted;
-      }
-    },
+    toggle: handleToggle,
     startFetching: setLoading,
-    fetchingSuccess: (state, action) => {
-      const { results, total_pages } = action.payload;
-
-      state.movies = results;
-      state.pages = total_pages;
-      state.status = 'success';
-    },
-    // fetchingSuccess: {
-    //   reducer(state, action) {
-    //     const { results, total_pages } = action.payload;
-    //     state.movies = results;
-    //     state.pages = total_pages;
-    //     state.status = 'success';
-    //   },
-    //   prepare(moviesObject) {
-    //     // Destructure results, add 'watchlisted'
-    //     // property to movie objects
-    //     const { results } = moviesObject;
-    //     const newResults = results.map(movie => ({
-    //       watchlisted: false,
-    //       ...movie
-    //     }));
-    //     // Merge movie array with the rest of the
-    //     // movie object (includes pagination, etc.)
-    //     const newMovieObject = { ...moviesObject, results: newResults };
-    //     return { payload: newMovieObject };
-    //   }
-    // },
-    fetchingFailed: setFailure
+    fetchingFailed: setFailure,
+    fetchingSuccess: requestSuccess
   }
 });
 
