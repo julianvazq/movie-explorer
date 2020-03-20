@@ -11,7 +11,7 @@ import {
   toggleWatchlistPopular
 } from './slices/popularMoviesSlice';
 import { watchlistState, remove } from './slices/watchlistSlice';
-import { Button } from 'reactstrap';
+// import { Button } from 'reactstrap';
 import styled from 'styled-components';
 
 const CustomButton = styled(Button)`

@@ -27,26 +27,11 @@ export const popularMoviesSlice = createSlice({
     startFetching: state => {
       state.status = 'loading';
     },
-    fetchingSuccess: {
-      reducer(state, action) {
-        const { results, total_pages } = action.payload;
-        state.movies = results;
-        state.pages = total_pages;
-        state.status = 'success';
-      },
-      prepare(moviesObject) {
-        // Destructure results, add 'watchlisted'
-        // property to movie objects
-        const { results } = moviesObject;
-        const newResults = results.map(movie => ({
-          watchlisted: false,
-          ...movie
-        }));
-        // Merge movie array with the rest of the
-        // movie object (includes pagination, etc.)
-        const newMovieObject = { ...moviesObject, results: newResults };
-        return { payload: newMovieObject };
-      }
+    fetchingSuccess: (state, action) => {
+      const { results, total_pages } = action.payload;
+      state.movies = results;
+      state.pages = total_pages;
+      state.status = 'success';
     },
     fetchingFailed: (state, action) => {
       console.log(action.payload);
