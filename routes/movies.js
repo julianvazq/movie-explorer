@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const fetch = require('node-fetch');
 
+const addWatchlistedProperty = movieObject => {
+  // Check if array or single object
+  if (movieObject.hasOwnProperty('results')) {
+    const { results } = movieObject;
+    const newResults = results.map(movie => ({
+      watchlisted: false,
+      ...movie
+    }));
+    return { ...movieObject, results: newResults };
+    // return newMovieObject;
+  } else {
+    return { watchlisted: false, ...movieObject };
+  }
+};
+
 //@route GET /movies/nowplaying/:[age]
 //@desc Get NOW PLAYING Movies
 router.get('/nowplaying/:page', async (req, res) => {
@@ -14,7 +29,8 @@ router.get('/nowplaying/:page', async (req, res) => {
     );
     const movies = await data.json();
 
-    res.send(movies);
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Request failed!' });
@@ -33,7 +49,8 @@ router.get('/popular/:page', async (req, res) => {
     );
     const movies = await data.json();
 
-    res.send(movies);
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Request failed!' });
@@ -52,7 +69,8 @@ router.get('/upcoming/:page', async (req, res) => {
     );
     const movies = await data.json();
 
-    res.send(movies);
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Request failed!' });
@@ -71,7 +89,8 @@ router.get('/:id/similar/:page', async (req, res) => {
     );
     const movies = await data.json();
 
-    res.send(movies);
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Request failed!' });
@@ -102,7 +121,47 @@ router.get('/random', async (req, res) => {
     );
     const randomMovie = await dataRandomMovie.json();
 
-    res.send(randomMovie);
+    const changedMovie = addWatchlistedProperty(randomMovie);
+    res.send(changedMovie);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Request failed!' });
+  }
+});
+
+//@route GET /movies/query:word
+//@desc Get Movies from WORD
+router.get('/query/:word', async (req, res) => {
+  try {
+    // Destructure data from client
+    const { word } = req.params;
+
+    const data = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&query=${word}`
+    );
+    const movies = await data.json();
+
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Request failed!' });
+  }
+});
+
+//@route GET /movies/:id
+//@desc Get MOVIE DETAILS
+router.get('/:id', async (req, res) => {
+  try {
+    // Destructure data from client
+    const { id } = req.params;
+
+    const data = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=videos,images`
+    );
+    const movie = await data.json();
+    const changedMovie = addWatchlistedProperty(movie);
+    res.send(changedMovie);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Request failed!' });
@@ -122,44 +181,6 @@ router.get('/:id/reviews/:page', async (req, res) => {
     const movies = await data.json();
 
     res.send(movies);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ error: 'Request failed!' });
-  }
-});
-
-//@route GET /movies/query:word
-//@desc Get Movies from WORD
-router.get('/query/:word', async (req, res) => {
-  try {
-    // Destructure data from client
-    const { word } = req.params;
-
-    const data = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&query=${word}`
-    );
-    const movie = await data.json();
-
-    res.send(movie);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send({ error: 'Request failed!' });
-  }
-});
-
-//@route GET /movies/:id
-//@desc Get MOVIE DETAILS
-router.get('/:id', async (req, res) => {
-  try {
-    // Destructure data from client
-    const { id } = req.params;
-
-    const data = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=videos,images`
-    );
-    const movie = await data.json();
-
-    res.send(movie);
   } catch (err) {
     console.log(err);
     res.status(500).send({ error: 'Request failed!' });

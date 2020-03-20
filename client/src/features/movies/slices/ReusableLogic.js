@@ -10,6 +10,28 @@ import {
   toggleWatchlistPopular
 } from './popularMoviesSlice';
 
+// Handle toggle
+export const handleToggle = (state, action) => {
+  const { id } = action.payload;
+  const movieToToggle = state.movies.find(movie => movie.id === id);
+  if (movieToToggle) {
+    movieToToggle.watchlisted = !movieToToggle.watchlisted;
+  }
+};
+
+// Start fetching
+export const setLoading = state => {
+  state.status = 'loading';
+};
+
+// Fetching failed
+export const setFailure = (state, action) => {
+  console.log(action.payload);
+  state.error = action.payload;
+  state.status = 'failure';
+};
+
+// Returns designated fetch to component
 export const determineFetch = type => {
   switch (type) {
     case 'NOW_PLAYING':
