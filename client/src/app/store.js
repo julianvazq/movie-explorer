@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import watchlistReducer from '../features/movies/slices/watchlistSlice';
-import moviesNowPlayingReducer from '../features/movies/slices/nowPlayingMoviesSlice';
+import nowPlayingMoviesReducer from '../features/movies/slices/nowPlayingMoviesSlice';
+import popularMoviesReducer from '../features/movies/slices/popularMoviesSlice';
 
 export default configureStore({
   reducer: {
     counter: counterReducer,
     watchlist: watchlistReducer,
-    moviesNowPlaying: moviesNowPlayingReducer
+    nowPlayingMovies: nowPlayingMoviesReducer,
+    popularMovies: popularMoviesReducer
   }
 });

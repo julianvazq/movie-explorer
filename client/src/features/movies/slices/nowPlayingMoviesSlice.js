@@ -64,7 +64,7 @@ export const {
 
 /***  THUNKS  ***/
 // Fetch Movies
-export const fetchMovies = page => async dispatch => {
+export const fetchNowPlayingMovies = page => async dispatch => {
   dispatch(startFetching());
   try {
     const response = await axios.get(`/movies/nowplaying/${page}`);
@@ -76,7 +76,7 @@ export const fetchMovies = page => async dispatch => {
 };
 
 // Toggle watchlisted property | Add/remove watchlist
-export const toggleWatchlist = selectedMovie => async dispatch => {
+export const toggleWatchlistNowPlaying = selectedMovie => async dispatch => {
   dispatch(toggle(selectedMovie));
 
   // Add/remove logic inversed because of toggle
@@ -91,10 +91,10 @@ export const toggleWatchlist = selectedMovie => async dispatch => {
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 
-export const nowPlayingMoviesState = state => ({
-  moviesNowPlaying: state.moviesNowPlaying.movies,
-  pages: state.moviesNowPlaying.pages,
-  status: state.moviesNowPlaying.status
+export const nowPlayingState = state => ({
+  nowPlayingMovies: state.nowPlayingMovies.movies,
+  pages: state.nowPlayingMovies.pages,
+  status: state.nowPlayingMovies.status
 });
 
 export default nowPlayingMoviesSlice.reducer;

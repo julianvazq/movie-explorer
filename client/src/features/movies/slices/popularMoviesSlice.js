@@ -55,7 +55,7 @@ export const {
   startFetching,
   fetchingFailed,
   fetchingSuccess
-} = moviesNowPlayingSlice.actions;
+} = popularMoviesSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -64,10 +64,10 @@ export const {
 
 /***  THUNKS  ***/
 // Fetch Movies
-export const fetchMovies = page => async dispatch => {
+export const fetchPopularMovies = page => async dispatch => {
   dispatch(startFetching());
   try {
-    const response = await axios.get(`/movies/nowplaying/${page}`);
+    const response = await axios.get(`/movies/popular/${page}`);
     dispatch(fetchingSuccess(response.data));
   } catch (err) {
     console.log(err);
@@ -76,7 +76,7 @@ export const fetchMovies = page => async dispatch => {
 };
 
 // Toggle watchlisted property | Add/remove watchlist
-export const toggleWatchlist = selectedMovie => async dispatch => {
+export const toggleWatchlistPopular = selectedMovie => async dispatch => {
   dispatch(toggle(selectedMovie));
 
   // Add/remove logic inversed because of toggle
@@ -91,7 +91,7 @@ export const toggleWatchlist = selectedMovie => async dispatch => {
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 
-export const popularMovies = state => ({
+export const popularMoviesState = state => ({
   popularMovies: state.popularMovies.movies,
   pages: state.popularMovies.pages,
   status: state.popularMovies.status

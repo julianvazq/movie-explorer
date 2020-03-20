@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  nowPlayingMoviesState,
-  fetchMovies,
-  toggleWatchlist
+  nowPlayingState,
+  fetchNowPlayingMovies,
+  toggleWatchlistNowPlaying
 } from './slices/nowPlayingMoviesSlice';
+import {
+  popularMoviesState,
+  fetchPopularMovies,
+  toggleWatchlistPopular
+} from './slices/popularMoviesSlice';
 import { watchlistState } from './slices/watchlistSlice';
 import { Button } from 'reactstrap';
 import styled from 'styled-components';
@@ -16,17 +21,17 @@ const CustomButton = styled(Button)`
 `;
 
 const MovieList = () => {
-  const { moviesNowPlaying, pages, status } = useSelector(
-    nowPlayingMoviesState
-  );
+  const { nowPlayingMovies, pages, status } = useSelector(nowPlayingState);
+  const { popularMovies } = useSelector(popularMoviesState);
   const { watchlist } = useSelector(watchlistState);
 
-  console.log(watchlist);
+  console.log(popularMovies);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMovies(1));
+    dispatch(fetchNowPlayingMovies(1));
+    dispatch(fetchPopularMovies(1));
   }, []);
 
   if (status === 'failure') {
@@ -40,13 +45,18 @@ const MovieList = () => {
   if (status === 'success') {
     return (
       <div>
+        <h2>Watchlist</h2>
+        <div>
+          {watchlist.map(movie => (
+            <p>{movie.title}</p>
+          ))}
+        </div>
         <CustomButton color='primary'>primary</CustomButton>
-        {moviesNowPlaying.map(movie => (
+        {nowPlayingMovies.map(movie => (
           <div
             style={{ margin: '1rem' }}
             onClick={() => {
-              dispatch(toggleWatchlist(movie));
-              //   dispatch(handleWatchlist(movie));
+              dispatch(toggleWatchlistNowPlaying(movie));
             }}
           >
             {movie.title}
@@ -54,12 +64,19 @@ const MovieList = () => {
             Watchlisted: {movie.watchlisted ? 'YES' : 'NO'}
           </div>
         ))}
-        <h2>Watchlist</h2>
-        <div>
-          {watchlist.map(movie => (
-            <p>{movie.title}</p>
-          ))}
-        </div>
+        <h2>Popular</h2>
+        {popularMovies.map(movie => (
+          <div
+            style={{ margin: '1rem' }}
+            onClick={() => {
+              dispatch(toggleWatchlistPopular(movie));
+            }}
+          >
+            {movie.title}
+            {''}
+            Watchlisted: {movie.watchlisted ? 'YES' : 'NO'}
+          </div>
+        ))}
       </div>
     );
   }
