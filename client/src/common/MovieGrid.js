@@ -52,8 +52,6 @@ const MovieGrid = ({
     return <p>Loading...</p>;
   }
 
-  //   const
-
   return (
     <>
       <Pagination

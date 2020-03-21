@@ -148,21 +148,26 @@ export const MainDiv = styled.div`
   /* border: 2px solid black; */
   margin: 1.25rem 0 0 !important;
   display: flex;
+  min-height: 200px;
+  /* max-height: 180px; */
 `;
 
 export const ImageContainer = styled.div`
   flex: 50%;
-  min-height: 150px;
-  max-height: 180px;
+`;
+export const MovieImage = styled.img`
+  width: 100%;
+  height: 100%;
   border-radius: ${props => props.theme.borderRadius};
   background: ${props => props.background_img};
-  background-position: center;
-  background-size: cover;
+  background-position: left;
+  background-size: contain;
   background-repeat: no-repeat;
 `;
-export const InfoContainer = styled.div`
+
+export const MovieHeader = styled.div`
   flex: 50%;
-  padding-left: 0.25rem;
+  padding-left: 0.5rem;
 
   h1,
   h2 {
@@ -211,7 +216,6 @@ export const MovieThumbnail = styled.div`
   min-height: 150px;
   background-position: center;
   background-size: contain;
-  /* background-repeat: no-repeat; */
 `;
 
 export const SimilarMoviesHeading = styled.h2`
