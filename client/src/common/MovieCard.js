@@ -9,52 +9,82 @@ import {
   CloseButton,
   ImageContainer,
   InfoContainer,
-  SimilarMoviesContainer
+  SimilarMoviesContainer,
+  SimilarMoviesGrid
 } from '../styles/styled-components';
 import PosterUnavailable from '../images/poster_unavailable.png';
+import SimilarMovie from './SimilarMovie';
 
-const MovieCard = ({ movie, toggleWatchlist }) => {
+const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const dispatch = useDispatch();
   const [movieDetails, setMovieDetails] = useState(movie);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const { watchlisted, id, poster_path, title, tagline } = movieDetails;
+  const [similarMovieDetails, setSimilarMovieDetails] = useState(null);
+
+  const { watchlisted, id, poster_path, title, tagline } = similarMovieDetails
+    ? similarMovieDetails
+    : movieDetails;
 
   const [modal, setModal] = useState(false);
   const toggle = () => {
     setModal(!modal);
     if (!modal) {
       fetchSimilarMovies();
+    } else {
+      setSimilarMovieDetails(null);
     }
   };
 
-  let IMG_URL = `https://image.tmdb.org/t/p/w500${poster_path}`;
-  if (!poster_path) {
-    IMG_URL = PosterUnavailable;
+  let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}`;
+  if (!poster_path && !IMG_MOVIE_CARD) {
+    IMG_MOVIE_CARD = PosterUnavailable;
   }
 
-  const fetchSimilarMovies = async () => {
-    const similarMovies = await axios.get(`/movies/${id}/similar/1`);
+  // Changes when similar movie is selected
+  let IMG_THUMBNAIL_URL = `https://image.tmdb.org/t/p/w500${poster_path}`;
+  if (!poster_path) {
+    IMG_THUMBNAIL_URL = PosterUnavailable;
+  }
+
+  const fetchMovieDetails = async (movieId = id) => {
+    const details = await axios.get(`/movies/${movieId}`);
+
+    setMovieDetails(details.data);
+  };
+
+  const fetchSimilarMovieDetails = async id => {
+    const details = await axios.get(`/movies/${id}`);
+    setSimilarMovieDetails(details.data);
+  };
+
+  const fetchSimilarMovies = async (movieId = id) => {
+    const similarMovies = await axios.get(`/movies/${movieId}/similar/1`);
     setSimilarMovies(similarMovies.data.results);
   };
 
+  const changeToSimilarMovie = async id => {
+    const similarMovieDetails = fetchSimilarMovieDetails(id);
+    setSimilarMovieDetails(similarMovieDetails);
+    fetchSimilarMovies(id);
+  };
+
   useEffect(() => {
-    const fetchMovieDetails = async () => {
-      const details = await axios.get(`/movies/${id}`);
-      setMovieDetails(details.data);
+    const fetchAsync = async () => {
+      fetchMovieDetails();
     };
-    fetchMovieDetails();
+    fetchAsync();
   }, []);
 
   //   onClick={() => dispatch(toggleWatchlist(movie))}
   return (
-    <Movie background_img={`url(${IMG_URL})`} onClick={toggle}>
+    <Movie background_img={`url(${IMG_MOVIE_CARD})`} onClick={toggle}>
       <CustomModal isOpen={modal} toggle={toggle}>
         <CustomModalBody>
-          <CloseButton />
+          <CloseButton onClick={toggle} />
           <MainDiv>
-            <ImageContainer background_img={`url(${IMG_URL})`}>
-              {/* <img src={IMG_URL} alt={title} /> */}
-            </ImageContainer>
+            <ImageContainer
+              background_img={`url(${IMG_THUMBNAIL_URL})`}
+            ></ImageContainer>
             <InfoContainer>
               <h1>{title}</h1>
               <h2>{tagline}</h2>
@@ -62,7 +92,18 @@ const MovieCard = ({ movie, toggleWatchlist }) => {
               <h2>{tagline}</h2>
             </InfoContainer>
           </MainDiv>
-          <SimilarMoviesContainer></SimilarMoviesContainer>
+          <SimilarMoviesContainer>
+            <SimilarMoviesGrid>
+              {similarMovies.slice(0, gridItems).map(movie => (
+                <SimilarMovie
+                  key={movie.id}
+                  id={movie.id}
+                  change={changeToSimilarMovie}
+                  posterPath={`url(https://image.tmdb.org/t/p/w500${movie.poster_path})`}
+                />
+              ))}
+            </SimilarMoviesGrid>
+          </SimilarMoviesContainer>
         </CustomModalBody>
       </CustomModal>
     </Movie>

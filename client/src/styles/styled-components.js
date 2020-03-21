@@ -135,11 +135,12 @@ export const CloseButton = styled(MdClose)`
 `;
 
 export const CustomModal = styled(Modal)`
-  transform: translate(0%, 30%) !important;
+  /* transform: translate(0%, 30%) !important; */
+  top: 15%;
 `;
 
 export const CustomModalBody = styled(ModalBody)`
-  min-height: 400px;
+  min-height: 550px;
   /* margin: 0.5rem; */
 `;
 
@@ -179,4 +180,40 @@ export const InfoContainer = styled.div`
 
 export const SimilarMoviesContainer = styled.section`
   min-height: 150px;
+  border-radius: ${props => props.theme.borderRadius};
+`;
+
+export const SimilarMoviesGrid = styled.div`
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 375px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 700px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+`;
+
+export const MovieThumbnail = styled.div`
+  border-radius: ${props => props.theme.borderRadius};
+  background: ${props => props.background_img};
+  min-height: 150px;
+  background-position: center;
+  background-size: contain;
+  /* background-repeat: no-repeat; */
+`;
+
+export const SimilarMoviesHeading = styled.h2`
+  font-size: 1.25rem;
 `;

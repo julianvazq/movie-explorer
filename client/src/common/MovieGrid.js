@@ -68,7 +68,7 @@ const MovieGrid = ({
             key={movie.id}
             movie={movie}
             toggleWatchlist={toggleWatchlist}
-            similarMoviesMax={gridItems}
+            gridItems={gridItems}
           />
         ))}
       </Grid>
