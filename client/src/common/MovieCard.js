@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import {
-  nowPlayingState,
-  fetchNowPlayingMovies,
-  toggleWatchlistNowPlaying
-} from '../features/movies/slices/nowPlayingMoviesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, toggleWatchlist }) => {
   const dispatch = useDispatch();
 
-  const { id } = movie;
+  const { id, watchlisted } = movie;
 
-  //   console.log(movie);
   return (
-    // <div onClick={() => dispatch(toggleWatchlistNowPlaying(movie))}>
-    <div>{movie.title}</div>
+    <div
+      style={{ color: watchlisted && 'red' }}
+      onClick={() => dispatch(toggleWatchlist(movie))}
+    >
+      {movie.title}
+    </div>
   );
 };
 

@@ -1,11 +1,8 @@
-import { useSelector, useDispatch } from 'react-redux';
 import {
-  nowPlayingState,
   fetchNowPlayingMovies,
   toggleWatchlistNowPlaying
 } from './nowPlayingMoviesSlice';
 import {
-  popularMoviesState,
   fetchPopularMovies,
   toggleWatchlistPopular
 } from './popularMoviesSlice';
@@ -46,6 +43,16 @@ export const determineFetch = type => {
       return fetchNowPlayingMovies;
     case 'POPULAR':
       return fetchPopularMovies;
+    default:
+  }
+};
+
+export const determineToggleWatchlist = type => {
+  switch (type) {
+    case 'NOW_PLAYING':
+      return toggleWatchlistNowPlaying;
+    case 'POPULAR':
+      return toggleWatchlistPopular;
     default:
   }
 };

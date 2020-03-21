@@ -51,7 +51,6 @@ export const fetchNowPlayingMovies = page => async dispatch => {
 
 // Toggle watchlisted property | Add/remove watchlist
 export const toggleWatchlistNowPlaying = selectedMovie => async dispatch => {
-  console.log('called watchlisttogglear');
   dispatch(toggle(selectedMovie));
 
   // Add/remove logic inversed because of toggle
