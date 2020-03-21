@@ -43,3 +43,52 @@ export const MainHeading = styled.h1`
 export const Heading = styled.h2`
   font-size: 1.25rem;
 `;
+
+/* Pagination */
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  margin-top: 1rem;
+`;
+
+export const PreviousPagination = styled.p`
+  flex: 50%;
+  margin-bottom: 0;
+  text-align: left;
+  margin-left: 1rem;
+`;
+
+export const NextPagination = styled.p`
+  flex: 50%;
+  margin-bottom: 0;
+  text-align: right;
+  margin-right: 1rem;
+`;
+
+export const PaginationButton = styled.span`
+  display: inline-block;
+  font-size: 1.125rem;
+`;
+
+/* Movie Grid */
+export const Grid = styled.div`
+  display: grid;
+  grid-gap: 0.25rem;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 375px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 700px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+`;

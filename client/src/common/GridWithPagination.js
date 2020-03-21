@@ -9,19 +9,18 @@ import {
   toggleWatchlistPopular
 } from '../features/movies/slices/popularMoviesSlice';
 import MovieGrid from './MovieGrid';
-import styled from 'styled-components';
 import { determineFetch } from '../features/movies/slices/ReusableLogic';
 import useWindowSize from '../hooks/useWindowSize';
 
 const GridWithPagination = ({ type }) => {
   const dispatch = useDispatch();
   const [width] = useWindowSize();
-
-  const [allMovies, setAllMovies] = useState([]);
-  const [moviesVisible, setMoviesVisible] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPages, setMaxPages] = useState(null);
   const [gridItems, setGridItems] = useState(3);
+
+  const incrementCurrentPage = () => {
+    setCurrentPage(prevState => prevState + 1);
+  };
 
   const {
     movies: nowPlayingMovies,
@@ -35,6 +34,7 @@ const GridWithPagination = ({ type }) => {
     status: popularMoviesStatus
   } = useSelector(popularMoviesState);
 
+  // Dispatch action to fetch movies
   useEffect(() => {
     // Call designated fetch action
     let fetch = null;
@@ -43,18 +43,19 @@ const GridWithPagination = ({ type }) => {
   }, [currentPage]);
 
   useLayoutEffect(() => {
-    if (width < 375) {
-      setGridItems(2);
-    } else if (width >= 375 && width < 700) {
-      setGridItems(3);
-    } else if (width >= 700 && width < 900) {
-      setGridItems(4);
-    } else {
+    if (width > 1200) {
+      setGridItems(6);
+    } else if (width > 900) {
       setGridItems(5);
+    } else if (width > 700) {
+      setGridItems(4);
+    } else if (width > 375) {
+      setGridItems(3);
+    } else {
+      setGridItems(2);
     }
   }, [width]);
 
-  //   console.log(gridItems);
   const createGridComponent = () => {
     switch (type) {
       case 'NOW_PLAYING':
@@ -64,9 +65,7 @@ const GridWithPagination = ({ type }) => {
             status={nowPlayingMoviesStatus}
             toggleWatchlist={toggleWatchlistNowPlaying}
             gridItems={gridItems}
-          >
-            Now playing
-          </MovieGrid>
+          />
         );
       case 'POPULAR':
         return (
@@ -75,9 +74,7 @@ const GridWithPagination = ({ type }) => {
             status={popularMoviesStatus}
             toggleWatchlist={toggleWatchlistPopular}
             gridItems={gridItems}
-          >
-            Popular
-          </MovieGrid>
+          />
         );
     }
   };

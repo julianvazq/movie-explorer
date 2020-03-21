@@ -1,23 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Pagination from './Pagination';
 import MovieCard from './MovieCard';
-import styled from 'styled-components';
+import { Grid } from '../styles/styled-components';
 
 const MovieGrid = ({ movies, status, toggleWatchlist, gridItems }) => {
-  const Grid = styled.div`
-    display: grid;
-    grid-gap: 0.25rem;
-    grid-template-columns: ${props => {
-      if (gridItems === 2) {
-        return 'repeat(2, 1fr);';
-      } else if (gridItems === 3) {
-        return 'repeat(3, 1fr);';
-      } else if (gridItems === 4) {
-        return 'repeat(4, 1fr);';
-      } else {
-        return 'repeat(5, 1fr);';
-      }
-    }};
-  `;
+  const [firstMovieVisible, setFirstMovieVisible] = useState(0);
+  const [lastMovieVisible, setLastMovieVisible] = useState(gridItems);
+
+  console.log(gridItems);
+  const MAX_MOVIES_PER_PAGE = 20;
+
+  const showPreviousMovies = () => {
+    if (firstMovieVisible >= gridItems) {
+      setFirstMovieVisible(prevState => prevState - gridItems);
+      setLastMovieVisible(prevState => prevState - gridItems);
+    } else {
+      setFirstMovieVisible(0);
+      setLastMovieVisible(gridItems);
+    }
+  };
+
+  const showNextMovies = () => {
+    if (lastMovieVisible + gridItems > MAX_MOVIES_PER_PAGE) {
+      // INCREMENT CURRENT PAGE
+    } else {
+      setFirstMovieVisible(prevState => prevState + gridItems);
+      setLastMovieVisible(prevState => prevState + gridItems);
+    }
+  };
+
+  useEffect(() => {
+    const showMovies = Math.abs(gridItems - lastMovieVisible);
+    setLastMovieVisible(prevState => prevState + showMovies);
+  }, [gridItems]);
 
   if (status === 'failure') {
     return <p>Oh no, something went wrong!</p>;
@@ -28,15 +43,23 @@ const MovieGrid = ({ movies, status, toggleWatchlist, gridItems }) => {
   }
 
   return (
-    <Grid>
-      {movies.map(movie => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          toggleWatchlist={toggleWatchlist}
-        />
-      ))}
-    </Grid>
+    <>
+      <Pagination
+        firstMovieVisible={firstMovieVisible}
+        lastMovieVisible={lastMovieVisible}
+        showPreviousMovies={showPreviousMovies}
+        showNextMovies={showNextMovies}
+      />
+      <Grid>
+        {movies.slice(firstMovieVisible, lastMovieVisible).map(movie => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            toggleWatchlist={toggleWatchlist}
+          />
+        ))}
+      </Grid>
+    </>
   );
 };
 
