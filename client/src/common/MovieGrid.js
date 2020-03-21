@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Pagination from './Pagination';
 import MovieCard from './MovieCard';
 import { Grid } from '../styles/styled-components';
 
-const MovieGrid = ({ movies, status, toggleWatchlist, gridItems }) => {
+const MovieGrid = ({
+  movies,
+  status,
+  maxPages,
+  currentPage,
+  toggleWatchlist,
+  fetchNextPage,
+  gridItems
+}) => {
   const [firstMovieVisible, setFirstMovieVisible] = useState(0);
   const [lastMovieVisible, setLastMovieVisible] = useState(gridItems);
 
-  console.log(gridItems);
   const MAX_MOVIES_PER_PAGE = 20;
 
   const showPreviousMovies = () => {
@@ -20,18 +28,23 @@ const MovieGrid = ({ movies, status, toggleWatchlist, gridItems }) => {
     }
   };
 
-  const showNextMovies = () => {
-    if (lastMovieVisible + gridItems > MAX_MOVIES_PER_PAGE) {
-      // INCREMENT CURRENT PAGE
-    } else {
-      setFirstMovieVisible(prevState => prevState + gridItems);
-      setLastMovieVisible(prevState => prevState + gridItems);
+  const showNextMovies = async () => {
+    if (
+      lastMovieVisible + gridItems > movies.length &&
+      currentPage < maxPages
+    ) {
+      await fetchNextPage();
     }
-  };
 
+    setFirstMovieVisible(prevState => prevState + gridItems);
+    setLastMovieVisible(prevState => prevState + gridItems);
+  };
   useEffect(() => {
-    const showMovies = Math.abs(gridItems - lastMovieVisible);
-    setLastMovieVisible(prevState => prevState + showMovies);
+    const moviesShowing = Math.abs(lastMovieVisible - firstMovieVisible);
+    const moviesToFill = gridItems - moviesShowing;
+    if (lastMovieVisible + moviesToFill < movies.length) {
+      setLastMovieVisible(prevState => prevState + moviesToFill);
+    }
   }, [gridItems]);
 
   if (status === 'failure') {

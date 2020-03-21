@@ -31,7 +31,13 @@ export const setFailure = (state, action) => {
 // Fetching success
 export const requestSuccess = (state, action) => {
   const { results, total_pages } = action.payload;
-  state.movies = results;
+  const withDuplicates = state.movies.concat(results);
+  // Remove duplicates
+  state.movies = Array.from(new Set(withDuplicates.map(movie => movie.id))).map(
+    id => {
+      return withDuplicates.find(movie => movie.id === id);
+    }
+  );
   state.pages = total_pages;
   state.status = 'success';
 };
