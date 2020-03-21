@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import Pagination from './Pagination';
 import MovieCard from './MovieCard';
 import { Grid } from '../styles/styled-components';
@@ -15,8 +14,6 @@ const MovieGrid = ({
 }) => {
   const [firstMovieVisible, setFirstMovieVisible] = useState(0);
   const [lastMovieVisible, setLastMovieVisible] = useState(gridItems);
-
-  const MAX_MOVIES_PER_PAGE = 20;
 
   const showPreviousMovies = () => {
     if (firstMovieVisible >= gridItems) {
@@ -55,6 +52,8 @@ const MovieGrid = ({
     return <p>Loading...</p>;
   }
 
+  //   const
+
   return (
     <>
       <Pagination
@@ -69,6 +68,7 @@ const MovieGrid = ({
             key={movie.id}
             movie={movie}
             toggleWatchlist={toggleWatchlist}
+            similarMoviesMax={gridItems}
           />
         ))}
       </Grid>

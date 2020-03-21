@@ -1,6 +1,6 @@
 import React from 'react';
 import GridSection from './GridSection';
-import { FullWidthContainer, Heading } from '../styles/styled-components';
+import { FullWidthContainer } from '../styles/styled-components';
 
 const MovieSection = () => {
   return (

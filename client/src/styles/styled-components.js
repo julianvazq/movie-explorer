@@ -1,5 +1,6 @@
-// import { Button } from 'reactstrap';
 import styled from 'styled-components';
+import { Modal, ModalBody } from 'reactstrap';
+import { MdClose } from 'react-icons/md';
 
 /* Containers */
 export const FullWidthContainer = styled.section`
@@ -91,4 +92,91 @@ export const Grid = styled.div`
   @media (min-width: 1200px) {
     grid-template-columns: repeat(6, 1fr);
   }
+`;
+
+/* Movie Card */
+export const Movie = styled.article`
+  border-radius: ${props => props.theme.borderRadius};
+  background: ${props => props.background_img};
+  min-height: 200px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transform: scale(1);
+  transition: background 250ms ease-in, transform 250ms ease-in-out;
+
+  &:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      ${props => props.background_img};
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: scale(1.1);
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  @media (min-width: 500px) {
+    min-height: 250px;
+  }
+
+  @media (min-width: 750px) {
+    min-height: 375px;
+  }
+`;
+
+/* Movie Modal */
+export const CloseButton = styled(MdClose)`
+  color: red;
+  font-size: 2rem;
+  position: absolute;
+  right: 6px;
+  top: 3px;
+`;
+
+export const CustomModal = styled(Modal)`
+  transform: translate(0%, 30%) !important;
+`;
+
+export const CustomModalBody = styled(ModalBody)`
+  min-height: 400px;
+  /* margin: 0.5rem; */
+`;
+
+export const MainDiv = styled.div`
+  /* border: 2px solid black; */
+  margin: 1.25rem 0 0 !important;
+  display: flex;
+`;
+
+export const ImageContainer = styled.div`
+  flex: 50%;
+  min-height: 150px;
+  max-height: 180px;
+  border-radius: ${props => props.theme.borderRadius};
+  background: ${props => props.background_img};
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+export const InfoContainer = styled.div`
+  flex: 50%;
+  padding-left: 0.25rem;
+
+  h1,
+  h2 {
+    margin-bottom: 0;
+  }
+  /* Title */
+  h1 {
+    font-size: 1.5rem;
+  }
+  /* Tagline */
+  h2 {
+    font-size: 1rem;
+  }
+`;
+
+export const SimilarMoviesContainer = styled.section`
+  min-height: 150px;
 `;
