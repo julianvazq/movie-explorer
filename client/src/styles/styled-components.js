@@ -65,31 +65,29 @@ export const Heading = styled.h2`
 /* Pagination */
 export const PaginationContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
 `;
 
 export const PreviousPagination = styled.p`
   flex: 50%;
   margin-bottom: 0;
   text-align: left;
-  margin-left: 1rem;
 `;
 
 export const NextPagination = styled.p`
   flex: 50%;
   margin-bottom: 0;
   text-align: right;
-  margin-right: 1rem;
 `;
 
 export const PaginationButton = styled.span`
   display: inline-block;
+  padding: 1rem 1rem 0.5rem;
   font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   font-weight: bold;
-  color: ${props => props.theme.goldSecondary};
+  color: ${props => props.theme.grayLight};
+  cursor: pointer;
 `;
 
 /* Movie Grid */
@@ -233,8 +231,8 @@ export const Details = styled.div`
   h3 {
     font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: ${props => props.theme.gold};
+    letter-spacing: 1.5px;
+    color: ${props => props.theme.grayLight} !important;
     margin: 0.5rem 0 0.25rem !important;
   }
 
@@ -292,6 +290,7 @@ export const MovieThumbnail = styled.div`
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  cursor: pointer;
 `;
 
 export const SimilarMoviesHeading = styled.h2`
