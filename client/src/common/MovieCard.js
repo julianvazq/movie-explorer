@@ -9,7 +9,10 @@ import {
   CloseButton,
   ImageContainer,
   MovieHeader,
-  MovieImage
+  MovieImage,
+  DetailsContainer,
+  Details,
+  Description
 } from '../styles/styled-components';
 import SimilarMoviesSection from './SimilarMoviesSection';
 import PosterUnavailable from '../images/poster_unavailable.png';
@@ -19,10 +22,18 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const [movieDetails, setMovieDetails] = useState(movie);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [similarMovieDetails, setSimilarMovieDetails] = useState(null);
+  const [changing, setChanging] = useState(false);
 
-  const { watchlisted, id, poster_path, title, tagline } = similarMovieDetails
-    ? similarMovieDetails
-    : movieDetails;
+  const {
+    watchlisted,
+    id,
+    poster_path,
+    title,
+    tagline,
+    genres,
+    runtime,
+    overview
+  } = similarMovieDetails ? similarMovieDetails : movieDetails;
 
   const [modal, setModal] = useState(false);
   const toggle = () => {
@@ -41,12 +52,12 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   // Changes when similar movie is selected
   let IMG_THUMBNAIL_URL = `https://image.tmdb.org/t/p/w500${poster_path}`;
-  if (!IMG_THUMBNAIL_URL) {
+  if (!poster_path && !IMG_THUMBNAIL_URL) {
     IMG_THUMBNAIL_URL = PosterUnavailable;
   }
-  if (!poster_path) {
-    IMG_THUMBNAIL_URL = PosterUnavailable;
-  }
+  //   if (!poster_path) {
+  //     IMG_THUMBNAIL_URL = PosterUnavailable;
+  //   }
 
   const fetchMovieDetails = async (movieId = id) => {
     const details = await axios.get(`/movies/${movieId}`);
@@ -65,9 +76,10 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   };
 
   const changeToSimilarMovie = async id => {
-    const similarMovieDetails = fetchSimilarMovieDetails(id);
-    setSimilarMovieDetails(similarMovieDetails);
+    setChanging(true);
+    fetchSimilarMovieDetails(id);
     fetchSimilarMovies(id);
+    setChanging(false);
   };
 
   useEffect(() => {
@@ -87,14 +99,30 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
             <ImageContainer>
               <MovieImage
                 src={`${IMG_THUMBNAIL_URL}`}
+                changing={changing}
                 // background_img={`url(${IMG_THUMBNAIL_URL})`}
               ></MovieImage>
             </ImageContainer>
             <MovieHeader>
               <h1>{title}</h1>
               <h2>{tagline}</h2>
+              <DetailsContainer>
+                {genres && (
+                  <Details>
+                    <h3>Genres</h3>
+                    {genres.map(genre => (
+                      <p key={genre.id}>{genre.name}</p>
+                    ))}
+                  </Details>
+                )}
+                <Details>
+                  <h3>Runtime</h3>
+                  <p>{runtime} minutes</p>
+                </Details>
+              </DetailsContainer>
             </MovieHeader>
           </MainDiv>
+          {overview && <Description>{overview}</Description>}
           <SimilarMoviesSection
             similarMovies={similarMovies}
             gridItems={gridItems}

@@ -9,8 +9,10 @@ import { Provider } from 'react-redux';
 
 const theme = {
   light: '#fff',
+  gray: 'hsl(250,5%,15%)',
   dark: 'hsl(250, 40%, 5%)',
-  gold: 'hsl(46, 65%, 52%)',
+  gold: 'hsl(46, 50%, 50%)',
+  goldSecondary: 'hsl(46, 60%, 70%)',
   borderRadius: '0.3rem'
 };
 
