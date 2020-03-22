@@ -8,9 +8,9 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 
 const theme = {
-  primary: '#60b0f4',
-  secondary: '#f0f4f6',
-  gray: 'hsl(0, 0%, 55%)',
+  light: '#fff',
+  dark: 'hsl(250, 40%, 5%)',
+  gold: 'hsl(46, 65%, 52%)',
   borderRadius: '0.3rem'
 };
 

@@ -5,6 +5,7 @@ import { MdClose } from 'react-icons/md';
 /* Containers */
 export const FullWidthContainer = styled.section`
   padding: 2rem 0.5rem;
+  background-color: ${props => props.theme.dark};
 
   @media (min-width: 600px) {
     padding: 2rem;
@@ -35,6 +36,10 @@ export const Container = styled.section`
   }
 `;
 
+export const MovieSectionContainer = styled.div`
+  margin-bottom: 2rem;
+`;
+
 /* Headings */
 export const MainHeading = styled.h1`
   font-size: 3.5rem;
@@ -43,6 +48,15 @@ export const MainHeading = styled.h1`
 
 export const Heading = styled.h2`
   font-size: 1.25rem;
+  color: ${props => props.theme.light};
+
+  @media (min-width: 500px) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 500px) {
+    font-size: 1.5rem;
+  }
 `;
 
 /* Pagination */
@@ -69,6 +83,7 @@ export const NextPagination = styled.p`
 export const PaginationButton = styled.span`
   display: inline-block;
   font-size: 1.125rem;
+  color: ${props => props.theme.light};
 `;
 
 /* Movie Grid */
@@ -135,21 +150,20 @@ export const CloseButton = styled(MdClose)`
 `;
 
 export const CustomModal = styled(Modal)`
-  /* transform: translate(0%, 30%) !important; */
+  background: ${props => props.theme.light};
+  border-radius: ${props => props.theme.borderRadius};
   top: 15%;
 `;
 
 export const CustomModalBody = styled(ModalBody)`
   min-height: 550px;
-  /* margin: 0.5rem; */
+  background: ${props => props.theme.light} !important;
 `;
 
 export const MainDiv = styled.div`
-  /* border: 2px solid black; */
   margin: 1.25rem 0 0 !important;
   display: flex;
   min-height: 200px;
-  /* max-height: 180px; */
 `;
 
 export const ImageContainer = styled.div`
@@ -216,6 +230,7 @@ export const MovieThumbnail = styled.div`
   min-height: 150px;
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 export const SimilarMoviesHeading = styled.h2`

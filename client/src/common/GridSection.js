@@ -2,17 +2,14 @@ import React from 'react';
 import { Heading } from '../styles/styled-components';
 import styled from 'styled-components';
 import GridWithPagination from './GridWithPagination';
-
-const MoviesContainer = styled.div``;
+import { MovieSectionContainer } from '../styles/styled-components';
 
 const GridSection = ({ type, heading }) => {
   return (
-    <>
+    <MovieSectionContainer>
       <Heading>{heading}</Heading>
-      <MoviesContainer>
-        <GridWithPagination type={type} />
-      </MoviesContainer>
-    </>
+      <GridWithPagination type={type} />
+    </MovieSectionContainer>
   );
 };
 

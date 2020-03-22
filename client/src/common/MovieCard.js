@@ -35,12 +35,9 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   };
 
   let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}`;
-  if (!movieDetails.poster_path && !IMG_MOVIE_CARD) {
+  if (!movieDetails.poster_path || !IMG_MOVIE_CARD) {
     IMG_MOVIE_CARD = PosterUnavailable;
   }
-  //   if (!poster_path) {
-  //     IMG_MOVIE_CARD = PosterUnavailable;
-  //   }
 
   // Changes when similar movie is selected
   let IMG_THUMBNAIL_URL = `https://image.tmdb.org/t/p/w500${poster_path}`;

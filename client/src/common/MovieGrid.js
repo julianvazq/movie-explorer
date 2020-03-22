@@ -44,13 +44,13 @@ const MovieGrid = ({
     }
   }, [gridItems]);
 
-  if (status === 'failure') {
-    return <p>Oh no, something went wrong!</p>;
-  }
+  //   if (status === 'failure') {
+  //     return <p>Oh no, something went wrong!</p>;
+  //   }
 
-  if (status === 'idle' || status === 'loading') {
-    return <p>Loading...</p>;
-  }
+  //   if (status === 'idle' || status === 'loading') {
+  //     return <p>Loading...</p>;
+  //   }
 
   return (
     <>
@@ -64,6 +64,7 @@ const MovieGrid = ({
         {movies.slice(firstMovieVisible, lastMovieVisible).map(movie => (
           <MovieCard
             key={movie.id}
+            status={status}
             movie={movie}
             toggleWatchlist={toggleWatchlist}
             gridItems={gridItems}
