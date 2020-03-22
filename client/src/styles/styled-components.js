@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Modal, ModalBody } from 'reactstrap';
 import { MdClose } from 'react-icons/md';
+import { FaHeart } from 'react-icons/fa';
 
 /* Containers */
 export const FullWidthContainer = styled.section`
@@ -145,14 +146,6 @@ export const Movie = styled.article`
 `;
 
 /* Movie Modal */
-export const CloseButton = styled(MdClose)`
-  color: red;
-  font-size: 2rem;
-  position: absolute;
-  right: 6px;
-  top: 3px;
-`;
-
 export const CustomModal = styled(Modal)`
   background: ${props => props.theme.gray} !important;
   border-radius: ${props => props.theme.borderRadius};
@@ -185,7 +178,7 @@ export const ImageContainer = styled.div`
   flex: 50%;
 `;
 export const MovieImage = styled.img`
-  height: 222px;
+  width: 90%;
   border-radius: ${props => props.theme.borderRadius};
   background: ${props => props.background_img};
   background-position: left;
@@ -216,24 +209,33 @@ export const MovieHeader = styled.div`
     margin-bottom: 0;
     margin-top: 0.25rem;
   }
+
+  @media (min-width: 600px) {
+    flex: 75%;
+  }
 `;
 
 export const DetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-row-gap: 0.125rem;
+  margin-top: 0.5rem;
 
   @media (min-width: 450px) {
-    flex-direction: row;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 0.5rem;
   }
 `;
 
 export const Details = styled.div`
+  visibility: ${props => (props.hidden ? 'hidden' : 'visible')};
+
   h3 {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: ${props => props.theme.grayLight} !important;
-    margin: 0.5rem 0 0.25rem !important;
+    margin-bottom: 0.25rem !important;
   }
 
   p {
@@ -255,10 +257,15 @@ export const Description = styled.p`
 `;
 
 export const SimilarMoviesContainer = styled.section`
-  min-height: 150px;
+  /* min-height: 150px; */
   padding: 1.125rem;
   border-radius: ${props => props.theme.borderRadius};
   background: ${props => props.theme.dark};
+
+  p {
+    margin-bottom: 0;
+    color: ${props => props.theme.grayLight};
+  }
 `;
 
 export const SimilarMoviesGrid = styled.div`
@@ -296,4 +303,44 @@ export const MovieThumbnail = styled.div`
 export const SimilarMoviesHeading = styled.h2`
   font-size: 1.25rem;
   color: ${props => props.theme.light};
+`;
+
+export const IconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  height: 35px;
+  width: 37px;
+  background: ${props =>
+    props.watchlisted ? 'hsla(46, 0%, 50%, 0.5)' : 'hsla(46, 0%, 50%, 0.5)'};
+  transform: scale(1);
+  transition: all 250ms ease-in;
+
+  &:hover {
+    transform: scale(1.1);
+    background: hsla(46, 0%, 50%, 0.5);
+  }
+`;
+
+/* Icons */
+export const HeartIcon = styled(FaHeart)`
+  font-size: 1.125rem;
+  color: ${props => (props.watchlisted ? props.theme.red : '#fff')};
+
+  ${IconContainer}:hover & {
+    color: ${props => props.theme.red};
+  }
+`;
+
+export const CloseButton = styled(MdClose)`
+  color: ${props => props.theme.red};
+  font-size: 2rem;
+  position: absolute;
+  right: 6px;
+  top: 3px;
 `;

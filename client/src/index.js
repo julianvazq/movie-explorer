@@ -8,6 +8,7 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 
 const theme = {
+  red: 'hsl(0, 50%, 50%)',
   light: '#fff',
   gray: 'hsl(250,5%,15%)',
   dark: 'hsl(250, 40%, 5%)',
