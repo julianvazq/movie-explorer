@@ -25,7 +25,6 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const [similarMovies, setSimilarMovies] = useState([]);
   const [similarMovieDetails, setSimilarMovieDetails] = useState(null);
   const [isWatchlisted, setIsWatchlisted] = useState(movie.watchlist);
-  const [changing, setChanging] = useState(false);
 
   const {
     watchlisted,
@@ -52,7 +51,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     }
   };
 
-  let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/w780${movieDetails.poster_path}`;
+  let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/w780${movie.poster_path}`;
   if (!movieDetails.poster_path || !IMG_MOVIE_CARD) {
     IMG_MOVIE_CARD = PosterUnavailable;
   }
@@ -81,10 +80,8 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   };
 
   const changeToSimilarMovie = async id => {
-    setChanging(true);
     fetchSimilarMovieDetails(id);
     fetchSimilarMovies(id);
-    setChanging(false);
   };
 
   const formatMoney = num => {
@@ -99,13 +96,20 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     fetchAsync();
   }, []);
 
+  useEffect(() => {
+    setMovieDetails({ ...movieDetails, watchlisted: movie.watchlisted });
+  }, [movie.watchlisted]);
+
   console.log(movie.watchlisted);
   //   onClick={() => dispatch(toggleWatchlist(movie))}
   return (
     <Movie background_img={`url(${IMG_MOVIE_CARD})`} onClick={toggle}>
       <IconContainer
         watchlisted={watchlisted ? 1 : 0}
-        onClick={() => dispatch(toggleWatchlist(movie))}
+        onClick={e => {
+          dispatch(toggleWatchlist(movieDetails));
+          e.stopPropagation();
+        }}
       >
         <HeartIcon watchlisted={watchlisted ? 1 : 0} />
       </IconContainer>
@@ -113,17 +117,14 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
         <CustomModalBody>
           <IconContainer
             watchlisted={watchlisted ? 1 : 0}
-            onClick={() => dispatch(toggleWatchlist(movie))}
+            onClick={() => dispatch(toggleWatchlist(movieDetails))}
           >
             <HeartIcon watchlisted={watchlisted ? 1 : 0} />
           </IconContainer>
           <CloseButton onClick={toggle} />
           <MainDiv>
             <ImageContainer>
-              <MovieImage
-                src={`${IMG_THUMBNAIL_URL}`}
-                changing={changing}
-              ></MovieImage>
+              <MovieImage src={`${IMG_THUMBNAIL_URL}`}></MovieImage>
             </ImageContainer>
             <MovieHeader>
               <h1>{title}</h1>

@@ -331,6 +331,7 @@ export const IconContainer = styled.div`
 export const HeartIcon = styled(FaHeart)`
   font-size: 1.125rem;
   color: ${props => (props.watchlisted ? props.theme.red : '#fff')};
+  transition: color 250ms ease-in;
 
   ${IconContainer}:hover & {
     color: ${props => props.theme.red};
