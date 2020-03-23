@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  watchlistState,
   fetchLocalStorage,
   add,
   remove
@@ -15,7 +14,7 @@ import {
   toggleWatchlistPopular
 } from '../features/movies/slices/popularMoviesSlice';
 import MovieGrid from './MovieGrid';
-import { determineFetch } from '../features/movies/slices/ReusableLogic';
+import { determineFetch } from '../features/movies/slices/GetReducers';
 import useWindowSize from '../hooks/useWindowSize';
 
 const getInitialGridItems = () => {
