@@ -27,7 +27,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const [movieDetails, setMovieDetails] = useState(movie);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [similarMovieDetails, setSimilarMovieDetails] = useState(null);
-  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(
+  const [isMovieModalWatchlisted, setIsMovieModalWatchlisted] = useState(
     movie.watchlisted
   );
 
@@ -127,13 +127,13 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     }
 
     dispatch(toggleWatchlist(movieToAdd));
-    // checkIfWatchlisted();
+    // checkIfMovieModalWatchlisted();
   };
 
   console.log(watchlist);
 
   // Checks if movie in modal is watchlisted
-  const checkIfWatchlisted = () => {
+  const checkIfMovieModalWatchlisted = () => {
     const movieToCheck = similarMovieDetails
       ? similarMovieDetails
       : movieDetails;
@@ -141,30 +141,10 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     const found = watchlist.find(movie => movie.id === movieToCheck.id);
 
     if (found) {
-      setIsMovieWatchlisted(true);
+      setIsMovieModalWatchlisted(true);
     } else {
-      setIsMovieWatchlisted(false);
+      setIsMovieModalWatchlisted(false);
     }
-    // console.log(watchlist.includes(similarMovieDetails));
-    // // console.log(watchlisted || watchlist.includes(similarMovieDetails));
-    // if (similarMovieDetails) {
-    //   if (similarMovieDetails.watchlisted) {
-    //     setIsMovieWatchlisted(true);
-    //   } else {
-    //     setIsMovieWatchlisted(false);
-    //   }
-    // } else {
-    //   if (movie.watchlisted) {
-    //     setIsMovieWatchlisted(true);
-    //   } else {
-    //     setIsMovieWatchlisted(false);
-    //   }
-
-    // if (movie.watchlisted || watchlist.includes(similarMovieDetails)) {
-    //   setIsMovieWatchlisted(true);
-    // } else {
-    //   setIsMovieWatchlisted(false);
-    // }
   };
 
   useEffect(() => {
@@ -182,8 +162,8 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   // When similar movie selected, check if watchlisted
   useEffect(() => {
-    checkIfWatchlisted();
-  }, [similarMovieDetails, watchlist, isMovieWatchlisted]);
+    checkIfMovieModalWatchlisted();
+  }, [similarMovieDetails, watchlist]);
 
   return (
     <Movie background_img={`url(${IMG_MOVIE_CARD})`} onClick={toggle}>
@@ -193,7 +173,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
       <CustomModal isOpen={modal} toggle={toggle}>
         <CustomModalBody>
           <IconContainer onClick={handleWatchlist}>
-            <HeartIcon watchlisted={isMovieWatchlisted ? 1 : 0} />
+            <HeartIcon watchlisted={isMovieModalWatchlisted ? 1 : 0} />
           </IconContainer>
           <CloseButton onClick={toggle} />
           <MainDiv>
