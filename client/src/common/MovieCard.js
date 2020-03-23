@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { watchlistState } from '../features/movies/slices/watchlistSlice';
 import axios from 'axios';
 import {
   Movie,
@@ -21,10 +22,14 @@ import PosterUnavailable from '../images/poster_unavailable.png';
 
 const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const dispatch = useDispatch();
+  const { watchlist } = useSelector(watchlistState);
+
   const [movieDetails, setMovieDetails] = useState(movie);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [similarMovieDetails, setSimilarMovieDetails] = useState(null);
-  const [similarMoviesInWatchlist, setSimilarMoviesInWatchlist] = useState([]);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(
+    movie.watchlisted
+  );
 
   const {
     watchlisted,
@@ -68,8 +73,6 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   const fetchMovieDetails = async (movieId = id) => {
     const details = await axios.get(`/movies/${movieId}`);
-    console.log('movie props: ', movie);
-    console.log('new movie details: ', movieDetails);
     setMovieDetails({ ...details.data, watchlisted: movie.watchlisted });
   };
 
@@ -99,22 +102,62 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
     // Checks if movie in modal has changed
     if (similarMovieDetails) {
-      movieToAdd = similarMovieDetails;
+      movieToAdd = {
+        watchlisted: !similarMovieDetails.watchlisted,
+        ...similarMovieDetails
+      };
+      setSimilarMovieDetails({
+        ...similarMovieDetails,
+        watchlisted: !similarMovieDetails.watchlisted
+      });
+      console.log(movieToAdd);
+      //   if (movieToAdd.watchlisted) {
+      //     setIsMovieWatchlisted(true);
+      //   } else {
+      //     setIsMovieWatchlisted(false);
+      //   }
+
+      //   if (watchlist.includes(similarMovieDetails)) {}
+      //   setIsSimilarMovieWatchlisted(1);
       // Keeps track of similar movies in watchlist (for styling of heart icon)
-      setSimilarMoviesInWatchlist(prevState => [
-        ...prevState,
-        similarMovieDetails.id
-      ]);
+      //   setSimilarMoviesInWatchlist(prevState => [
+      //     ...prevState,
+      //     similarMovieDetails.id
+      //   ]);
     } else {
       movieToAdd = movieDetails;
+      //   setIsSimilarMovieWatchlisted(0);
     }
 
     dispatch(toggleWatchlist(movieToAdd));
+    checkIfWatchlisted();
   };
 
-  //   const checkIfWatchlisted = () => {
-  //     if (watchlisted || similarMoviesInWatchlist.includes(similar))
-  //   }
+  console.log(watchlist);
+  // Checks if movie in modal is watchlisted
+  const checkIfWatchlisted = () => {
+    console.log(watchlist.includes(similarMovieDetails));
+    // console.log(watchlisted || watchlist.includes(similarMovieDetails));
+    if (similarMovieDetails) {
+      if (similarMovieDetails.watchlisted) {
+        setIsMovieWatchlisted(true);
+      } else {
+        setIsMovieWatchlisted(false);
+      }
+    } else {
+      if (movie.watchlisted) {
+        setIsMovieWatchlisted(true);
+      } else {
+        setIsMovieWatchlisted(false);
+      }
+    }
+
+    // if (movie.watchlisted || watchlist.includes(similarMovieDetails)) {
+    //   setIsMovieWatchlisted(true);
+    // } else {
+    //   setIsMovieWatchlisted(false);
+    // }
+  };
 
   useEffect(() => {
     const fetchAsync = async () => {
@@ -129,21 +172,20 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     setMovieDetails({ ...movieDetails, watchlisted: movie.watchlisted });
   }, [movie.watchlisted]);
 
+  // When similar movie selected, check if watchlisted
+  useEffect(() => {
+    checkIfWatchlisted();
+  }, [similarMovieDetails, watchlist, isMovieWatchlisted]);
+
   return (
     <Movie background_img={`url(${IMG_MOVIE_CARD})`} onClick={toggle}>
-      <IconContainer
-        watchlisted={movie.watchlisted ? 1 : 0}
-        onClick={handleWatchlist}
-      >
-        <HeartIcon watchlisted={watchlisted ? 1 : 0} />
+      <IconContainer onClick={handleWatchlist}>
+        <HeartIcon watchlisted={movie.watchlisted ? 1 : 0} />
       </IconContainer>
       <CustomModal isOpen={modal} toggle={toggle}>
         <CustomModalBody>
-          <IconContainer
-            watchlisted={watchlisted ? 1 : 0}
-            onClick={handleWatchlist}
-          >
-            <HeartIcon watchlisted={watchlisted ? 1 : 0} />
+          <IconContainer onClick={handleWatchlist}>
+            <HeartIcon watchlisted={isMovieWatchlisted ? 1 : 0} />
           </IconContainer>
           <CloseButton onClick={toggle} />
           <MainDiv>

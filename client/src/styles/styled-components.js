@@ -316,8 +316,7 @@ export const IconContainer = styled.div`
   left: 5px;
   height: 35px;
   width: 37px;
-  background: ${props =>
-    props.watchlisted ? 'hsla(46, 0%, 50%, 0.5)' : 'hsla(46, 0%, 50%, 0.5)'};
+  background: 'hsla(46, 0%, 50%, 0.5)';
   transform: scale(1);
   transition: all 250ms ease-in;
 
