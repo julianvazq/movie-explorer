@@ -7,6 +7,7 @@ import { FaHeart } from 'react-icons/fa';
 export const FullWidthContainer = styled.section`
   padding: 2rem 0.5rem;
   background-color: ${props => props.theme.dark};
+  min-height: 100vh;
 
   @media (min-width: 600px) {
     padding: 2rem;
@@ -62,9 +63,6 @@ export const Heading = styled.h2`
     font-size: 1.5rem;
   }
 `;
-
-/* Navigation */
-// export const CustomBadge = styled(Badge)``;
 
 /* Pagination */
 export const PaginationContainer = styled.div`

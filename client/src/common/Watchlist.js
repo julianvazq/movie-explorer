@@ -1,11 +1,12 @@
 import React from 'react';
-import { Container } from '../styles/styled-components';
+import { FullWidthContainer } from '../styles/styled-components';
+import WatchlistGrid from './WatchlistGrid';
 
 const Home = () => {
   return (
-    <Container>
-      <h1>Watchlist</h1>
-    </Container>
+    <FullWidthContainer>
+      <WatchlistGrid />
+    </FullWidthContainer>
   );
 };
 

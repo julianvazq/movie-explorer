@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { watchlistState } from '../features/movies/slices/watchlistSlice';
+import {
+  watchlistState,
+  remove
+} from '../features/movies/slices/watchlistSlice';
 import axios from 'axios';
 import {
   Movie,
@@ -47,6 +50,11 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     vote_average,
     homepage
   } = similarMovieDetails ? similarMovieDetails : movieDetails;
+
+  // For Watchlist Component
+  if (!toggleWatchlist) {
+    toggleWatchlist = remove;
+  }
 
   const [modal, setModal] = useState(false);
   const toggle = () => {

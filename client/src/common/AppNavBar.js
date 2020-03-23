@@ -3,19 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { watchlistState } from '../features/movies/slices/watchlistSlice';
 import { FaGithub, FaFilm } from 'react-icons/fa';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  // Nav,
-  // NavItem,
-  NavLink,
-  Container,
-  Badge
-} from 'reactstrap';
+import { Badge } from 'reactstrap';
 import styled from 'styled-components';
-// import { CustomBadge } from '../styles/styled-components';
 
 const Nav = styled.nav`
   background: ${props => props.theme.gray};
@@ -91,8 +80,6 @@ const AppNavbar = props => {
   const [isOpen, setIsOpen] = useState(false);
   const { watchlist } = useSelector(watchlistState);
 
-  const toogle = () => setIsOpen(!isOpen);
-
   return (
     <Nav>
       <NavInnerContainer>
@@ -101,7 +88,6 @@ const AppNavbar = props => {
             <FaFilm />
           </LogoContainer>
         </Link>
-        {/* <ListContainer> */}
         <NavList>
           <Link to='/'>
             <NavItem>Home</NavItem>
@@ -121,41 +107,8 @@ const AppNavbar = props => {
             </a>
           </NavItem>
         </NavList>
-        {/* </ListContainer> */}
       </NavInnerContainer>
     </Nav>
-    // {/* <CustomNavBar color='dark' dark expand='sm' className='mb-5'>
-    //   <Container>
-    //     <NavbarBrand tag={RRNavLink} to='/'>
-    //       ME
-    //     </NavbarBrand>
-    //     <NavbarToggler onClick={toogle} />
-    //     <Collapse isOpen={isOpen} navbar>
-    //       <Nav navbar>
-    //         <NavItem>
-    //           <NavLink tag={RRNavLink} to='/' exact activeClassName='active'>
-    //             Home
-    //           </NavLink>
-    //         </NavItem>{' '}
-    //         <NavItem>
-    //           <NavLink
-    //             tag={RRNavLink}
-    //             to='/watchlist'
-    //             exact
-    //             activeClassName='active'
-    //           >
-    //             Watchlist<CustomBadge>{watchlist.length}</CustomBadge>
-    //           </NavLink>
-    //         </NavItem>
-    //         <NavItem>
-    //           <NavLink href='https://github.com/julianvazq/movie-explorer'>
-    //             GitHub
-    //           </NavLink>
-    //         </NavItem>
-    //       </Nav>
-    //     </Collapse>
-    //   </Container>
-    // </CustomNavBar> */}
   );
 };
 

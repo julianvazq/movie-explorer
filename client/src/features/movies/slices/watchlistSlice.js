@@ -27,6 +27,18 @@ export const watchlistSlice = createSlice({
 
 export const { add, remove } = watchlistSlice.actions;
 
+// Thunk
+export const toggleWatchlist = selectedMovie => async (dispatch, getState) => {
+  const watchlist = getState().watchlist.watchlist;
+  const found = watchlist.find(movie => movie.id === selectedMovie.id);
+
+  if (found) {
+    dispatch(remove(selectedMovie));
+  } else {
+    dispatch(add(selectedMovie));
+  }
+};
+
 export const watchlistState = state => ({
   watchlist: state.watchlist.watchlist
 });

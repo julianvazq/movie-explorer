@@ -15,7 +15,9 @@ const App = () => {
         <Route path='/watchlist' exact component={Watchlist} />
         <Route
           render={() => (
-            <h2 style={{ textAlign: 'center' }}>404 Page Not Found</h2>
+            <h2 style={{ textAlign: 'center', marginTop: '3rem' }}>
+              404 Page Not Found
+            </h2>
           )}
         />
       </Switch>
