@@ -77,6 +77,26 @@ router.get('/upcoming/:page', async (req, res) => {
   }
 });
 
+//@route GET /movies/toprated/:page
+//@desc Get TOP RATED Movies
+router.get('/toprated/:page', async (req, res) => {
+  try {
+    // Destructure data from client
+    const { page } = req.params;
+
+    const data = await fetch(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
+    );
+    const movies = await data.json();
+
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Request failed!' });
+  }
+});
+
 //@route GET /movies/:id/similar/:page
 //@desc Get SIMILAR Movies
 router.get('/:id/similar/:page', async (req, res) => {
