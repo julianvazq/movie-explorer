@@ -64,7 +64,7 @@ export const Heading = styled.h2`
 `;
 
 /* Navigation */
-export const CustomBadge = styled(Badge)``;
+// export const CustomBadge = styled(Badge)``;
 
 /* Pagination */
 export const PaginationContainer = styled.div`
