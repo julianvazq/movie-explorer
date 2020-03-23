@@ -130,27 +130,38 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     }
 
     dispatch(toggleWatchlist(movieToAdd));
-    checkIfWatchlisted();
+    // checkIfWatchlisted();
   };
 
   console.log(watchlist);
+
   // Checks if movie in modal is watchlisted
   const checkIfWatchlisted = () => {
-    console.log(watchlist.includes(similarMovieDetails));
-    // console.log(watchlisted || watchlist.includes(similarMovieDetails));
-    if (similarMovieDetails) {
-      if (similarMovieDetails.watchlisted) {
-        setIsMovieWatchlisted(true);
-      } else {
-        setIsMovieWatchlisted(false);
-      }
+    const movieToCheck = similarMovieDetails
+      ? similarMovieDetails
+      : movieDetails;
+
+    const found = watchlist.find(movie => movie.id === movieToCheck.id);
+
+    if (found) {
+      setIsMovieWatchlisted(true);
     } else {
-      if (movie.watchlisted) {
-        setIsMovieWatchlisted(true);
-      } else {
-        setIsMovieWatchlisted(false);
-      }
+      setIsMovieWatchlisted(false);
     }
+    // console.log(watchlist.includes(similarMovieDetails));
+    // // console.log(watchlisted || watchlist.includes(similarMovieDetails));
+    // if (similarMovieDetails) {
+    //   if (similarMovieDetails.watchlisted) {
+    //     setIsMovieWatchlisted(true);
+    //   } else {
+    //     setIsMovieWatchlisted(false);
+    //   }
+    // } else {
+    //   if (movie.watchlisted) {
+    //     setIsMovieWatchlisted(true);
+    //   } else {
+    //     setIsMovieWatchlisted(false);
+    //   }
 
     // if (movie.watchlisted || watchlist.includes(similarMovieDetails)) {
     //   setIsMovieWatchlisted(true);
