@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink as RRNavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { watchlistState } from '../features/movies/slices/watchlistSlice';
 import {
   Collapse,
   Navbar,
@@ -11,6 +13,7 @@ import {
   Container
 } from 'reactstrap';
 import styled from 'styled-components';
+import { CustomBadge } from '../styles/styled-components';
 
 const CustomNavBar = styled(Navbar)`
   margin-bottom: 0 !important;
@@ -18,19 +21,20 @@ const CustomNavBar = styled(Navbar)`
 
 const AppNavbar = props => {
   const [isOpen, setIsOpen] = useState(false);
+  const { watchlist } = useSelector(watchlistState);
 
   const toogle = () => setIsOpen(!isOpen);
 
   return (
     <div>
-      <CustomNavBar color='dark' dark expand='sm' className='mb-5'>
+      {/* <CustomNavBar color='dark' dark expand='sm' className='mb-5'>
         <Container>
           <NavbarBrand tag={RRNavLink} to='/'>
             ME
           </NavbarBrand>
           <NavbarToggler onClick={toogle} />
           <Collapse isOpen={isOpen} navbar>
-            <Nav className='ml-auto' navbar>
+            <Nav navbar>
               <NavItem>
                 <NavLink tag={RRNavLink} to='/' exact activeClassName='active'>
                   Home
@@ -43,7 +47,7 @@ const AppNavbar = props => {
                   exact
                   activeClassName='active'
                 >
-                  Watchlist
+                  Watchlist<CustomBadge>{watchlist.length}</CustomBadge>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -54,7 +58,7 @@ const AppNavbar = props => {
             </Nav>
           </Collapse>
         </Container>
-      </CustomNavBar>
+      </CustomNavBar> */}
     </div>
   );
 };

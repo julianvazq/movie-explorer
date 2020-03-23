@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Modal, ModalBody } from 'reactstrap';
+import { Modal, ModalBody, Badge } from 'reactstrap';
 import { MdClose } from 'react-icons/md';
 import { FaHeart } from 'react-icons/fa';
 
@@ -13,7 +13,7 @@ export const FullWidthContainer = styled.section`
   }
 
   @media (min-width: 1200px) {
-    margin: 2rem auto;
+    margin: 0rem auto;
   }
 `;
 
@@ -62,6 +62,9 @@ export const Heading = styled.h2`
     font-size: 1.5rem;
   }
 `;
+
+/* Navigation */
+export const CustomBadge = styled(Badge)``;
 
 /* Pagination */
 export const PaginationContainer = styled.div`
