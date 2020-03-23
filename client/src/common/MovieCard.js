@@ -123,14 +123,25 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
       console.log(movieToAdd);
     } else {
       movieToAdd = movieDetails;
-      //   setIsSimilarMovieWatchlisted(0);
     }
 
     dispatch(toggleWatchlist(movieToAdd));
-    // checkIfMovieModalWatchlisted();
   };
 
   console.log(watchlist);
+
+  const checkIfMovieCardWatchlisted = () => {
+    const movieToCheck = movieDetails;
+
+    const found = watchlist.find(movie => movie.id === movieToCheck.id);
+
+    // Using 1s and 0s because of Styled Components limitation with boolean props
+    if (found) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
 
   // Checks if movie in modal is watchlisted
   const checkIfMovieModalWatchlisted = () => {
@@ -167,8 +178,9 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   return (
     <Movie background_img={`url(${IMG_MOVIE_CARD})`} onClick={toggle}>
+      <h1>{title}</h1>
       <IconContainer onClick={handleWatchlist}>
-        <HeartIcon watchlisted={movie.watchlisted ? 1 : 0} />
+        <HeartIcon watchlisted={checkIfMovieCardWatchlisted()} />
       </IconContainer>
       <CustomModal isOpen={modal} toggle={toggle}>
         <CustomModalBody>

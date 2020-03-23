@@ -124,6 +124,17 @@ export const Movie = styled.article`
   background-repeat: no-repeat;
   transform: scale(1);
   transition: background 250ms ease-in, transform 250ms ease-in-out;
+  color: ${props => props.theme.light};
+  display: flex;
+
+  h1 {
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 250ms ease-in;
+    margin: auto;
+    align-self: flex-end;
+    text-align: center;
+  }
 
   &:hover {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
@@ -136,12 +147,24 @@ export const Movie = styled.article`
     cursor: pointer;
   }
 
+  &:hover h1 {
+    opacity: 1;
+  }
+
   @media (min-width: 500px) {
     min-height: 250px;
+
+    h1 {
+      font-size: 1.25rem;
+    }
   }
 
   @media (min-width: 750px) {
     min-height: 375px;
+
+    /* h1 {
+      font-size: 1.25rem;
+    } */
   }
 `;
 
@@ -316,7 +339,7 @@ export const IconContainer = styled.div`
   left: 5px;
   height: 35px;
   width: 37px;
-  background: 'hsla(46, 0%, 50%, 0.5)';
+  background: hsla(46, 0%, 50%, 0.5);
   transform: scale(1);
   transition: all 250ms ease-in;
 
