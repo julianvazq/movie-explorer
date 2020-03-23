@@ -73,9 +73,9 @@ export const toggleWatchlist = selectedMovie => async (dispatch, getState) => {
   const found = watchlist.find(movie => movie.id === selectedMovie.id);
 
   if (found) {
-    dispatch(remove(selectedMovie));
+    dispatch(removeFromLocalStorage(selectedMovie));
   } else {
-    dispatch(add(selectedMovie));
+    dispatch(addToLocalStorage(selectedMovie));
   }
 };
 
