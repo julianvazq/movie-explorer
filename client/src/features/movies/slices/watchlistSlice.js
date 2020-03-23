@@ -6,6 +6,10 @@ export const watchlistSlice = createSlice({
     watchlist: []
   },
   reducers: {
+    getLocalStorageSuccess: (state, action) => {
+      const watchlistedMovies = action.payload;
+      state.watchlist = watchlistedMovies;
+    },
     add: (state, action) => {
       const movieToAdd = action.payload;
       const found = state.watchlist.find(movie => movie.id === movieToAdd.id);
@@ -25,9 +29,48 @@ export const watchlistSlice = createSlice({
   }
 });
 
-export const { add, remove } = watchlistSlice.actions;
+export const { getLocalStorageSuccess, add, remove } = watchlistSlice.actions;
 
-// Thunk
+// Thunks
+
+export const fetchLocalStorage = () => async (dispatch, getState) => {
+  try {
+    const storedMovies = JSON.parse(localStorage.getItem('movies') || '[]');
+    dispatch(getLocalStorageSuccess(storedMovies));
+
+    // localStorage.setItem('movies', JSON.stringify([]));
+    // const storedMovies = localStorage.getItem('movies');
+    // console.log(storedMovies);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const addToLocalStorage = selectedMovie => async dispatch => {
+  const storedMovies = JSON.parse(localStorage.getItem('movies') || '[]');
+
+  const found = storedMovies.find(movie => movie.id === selectedMovie.id);
+  if (!found) {
+    storedMovies.push(selectedMovie);
+    dispatch(add(selectedMovie));
+  }
+  localStorage.setItem('movies', JSON.stringify(storedMovies));
+};
+
+export const removeFromLocalStorage = selectedMovie => async (
+  dispatch,
+  getState
+) => {
+  const storedMovies = JSON.parse(localStorage.getItem('movies') || '[]');
+
+  const index = storedMovies.findIndex(movie => movie.id === selectedMovie.id);
+  if (index !== -1) {
+    storedMovies.splice(index, 1);
+    dispatch(remove(selectedMovie));
+  }
+  localStorage.setItem('movies', JSON.stringify(storedMovies));
+};
+
 export const toggleWatchlist = selectedMovie => async (dispatch, getState) => {
   const watchlist = getState().watchlist.watchlist;
   const found = watchlist.find(movie => movie.id === selectedMovie.id);

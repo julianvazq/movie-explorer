@@ -9,7 +9,7 @@ const Alert = ({ message, button }) => {
   const Message = styled.p`
     font-size: 1.25rem;
     margin-bottom: 2rem;
-    color: ${props => props.theme.light};
+    color: ${props => props.theme.grayLight};
   `;
 
   return (

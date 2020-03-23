@@ -13,7 +13,7 @@ const theme = {
   gray: 'hsl(250,5%,15%)',
   dark: 'hsl(250, 40%, 5%)',
   gold: 'hsl(46, 50%, 50%)',
-  grayLight: 'hsl(46,0%,70%)',
+  grayLight: 'hsl(46,0%,60%)',
   borderRadius: '0.3rem'
 };
 
