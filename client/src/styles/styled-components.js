@@ -132,7 +132,8 @@ export const Movie = styled.article`
     opacity: 0;
     transition: opacity 250ms ease-in;
     margin: auto;
-    align-self: flex-end;
+    padding: 0 0.5rem;
+    align-self: center;
     text-align: center;
   }
 
@@ -179,6 +180,10 @@ export const CustomModal = styled(Modal)`
 
   @media (min-width: 600px) {
     top: 0%;
+  }
+
+  @media (min-width: 700px) {
+    max-width: 600px !important;
   }
 `;
 
@@ -366,4 +371,5 @@ export const CloseButton = styled(MdClose)`
   position: absolute;
   right: 6px;
   top: 3px;
+  cursor: pointer;
 `;
