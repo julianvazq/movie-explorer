@@ -1,5 +1,6 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLocalStorage } from '../features/movies/slices/watchlistSlice';
 import { Link } from 'react-router-dom';
 import {
   watchlistState,
@@ -34,7 +35,13 @@ const RedirectButton = styled(Link)`
 `;
 
 const WatchlistGrid = () => {
+  const dispatch = useDispatch();
   const { watchlist } = useSelector(watchlistState);
+
+  useEffect(() => {
+    // Initialize LocalStorage
+    dispatch(fetchLocalStorage());
+  }, []);
 
   return (
     <>

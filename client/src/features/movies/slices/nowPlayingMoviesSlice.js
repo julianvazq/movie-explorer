@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { add, remove } from './watchlistSlice';
+import { addToLocalStorage, removeFromLocalStorage } from './watchlistSlice';
 import {
   setLoading,
   setFailure,
@@ -55,9 +55,9 @@ export const toggleWatchlistNowPlaying = selectedMovie => async dispatch => {
 
   // Add/remove logic inversed because of toggle
   if (selectedMovie.watchlisted) {
-    dispatch(remove(selectedMovie));
+    dispatch(removeFromLocalStorage(selectedMovie));
   } else {
-    dispatch(add(selectedMovie));
+    dispatch(addToLocalStorage(selectedMovie));
   }
 };
 

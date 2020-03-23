@@ -57,10 +57,7 @@ export const addToLocalStorage = selectedMovie => async dispatch => {
   localStorage.setItem('movies', JSON.stringify(storedMovies));
 };
 
-export const removeFromLocalStorage = selectedMovie => async (
-  dispatch,
-  getState
-) => {
+export const removeFromLocalStorage = selectedMovie => async dispatch => {
   const storedMovies = JSON.parse(localStorage.getItem('movies') || '[]');
 
   const index = storedMovies.findIndex(movie => movie.id === selectedMovie.id);
