@@ -238,6 +238,10 @@ export const MovieHeader = styled.div`
     margin-top: 0.25rem;
   }
 
+  a {
+    color: ${props => props.theme.light};
+  }
+
   @media (min-width: 600px) {
     flex: 75%;
   }
@@ -249,9 +253,15 @@ export const DetailsContainer = styled.div`
   grid-row-gap: 0.125rem;
   margin-top: 0.5rem;
 
-  @media (min-width: 450px) {
+  @media (min-width: 375px) {
     grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 0.75rem;
     grid-row-gap: 0.5rem;
+  }
+
+  @media (min-width: 450px) {
+    /* grid-template-columns: repeat(2, 1fr); */
+    /* grid-row-gap: 0.5rem; */
   }
 `;
 

@@ -43,7 +43,9 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     release_date,
     original_language,
     budget,
-    revenue
+    revenue,
+    vote_average,
+    homepage
   } = similarMovieDetails ? similarMovieDetails : movieDetails;
 
   const [modal, setModal] = useState(false);
@@ -104,6 +106,11 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const formatMoney = num => {
     const money = num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     return '$' + money;
+  };
+
+  const getYear = date => {
+    const dateObj = new Date(date);
+    return dateObj.getFullYear();
   };
 
   const handleWatchlist = e => {
@@ -208,22 +215,36 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
                   <h3>Runtime</h3>
                   <p>{runtime} minutes</p>
                 </Details>
-                <Details hidden={window.innerWidth < 450 ? true : false}>
+                <Details hidden={window.innerWidth < 375 ? true : false}>
                   <h3>Released</h3>
-                  <p>{release_date}</p>
+                  <p>{getYear(release_date)}</p>
                 </Details>
+                {vote_average ? (
+                  <Details hidden={window.innerWidth < 375 ? true : false}>
+                    <h3>Rating</h3>
+                    <p>{vote_average}</p>
+                  </Details>
+                ) : null}
                 <Details hidden={window.innerWidth < 450 ? true : false}>
                   <h3>Language</h3>
                   <p>{original_language.toUpperCase()}</p>
                 </Details>
+                {homepage ? (
+                  <Details hidden={window.innerWidth < 450 ? true : false}>
+                    <h3>Website</h3>
+                    <p>
+                      <a href={homepage}>Link</a>
+                    </p>
+                  </Details>
+                ) : null}
                 {budget ? (
-                  <Details hidden={window.innerWidth < 500 ? true : false}>
+                  <Details hidden={window.innerWidth < 450 ? true : false}>
                     <h3>Budget</h3>
                     <p>{formatMoney(budget)}</p>
                   </Details>
                 ) : null}
                 {revenue ? (
-                  <Details hidden={window.innerWidth < 500 ? true : false}>
+                  <Details hidden={window.innerWidth < 450 ? true : false}>
                     <h3>Revenue</h3>
                     <p>{formatMoney(revenue)}</p>
                   </Details>
