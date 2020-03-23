@@ -8,7 +8,10 @@ export const watchlistSlice = createSlice({
   reducers: {
     add: (state, action) => {
       const movieToAdd = action.payload;
-      state.watchlist.push(movieToAdd);
+      const found = state.watchlist.find(movie => movie.id === movieToAdd.id);
+      if (!found) {
+        state.watchlist.push(movieToAdd);
+      }
     },
     remove: (state, action) => {
       const selectedMovie = action.payload;

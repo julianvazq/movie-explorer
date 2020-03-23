@@ -78,7 +78,17 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   const fetchSimilarMovieDetails = async id => {
     const details = await axios.get(`/movies/${id}`);
-    setSimilarMovieDetails(details.data);
+
+    const movieWatchlisted = watchlist.find(
+      movie => movie.id === details.data.id
+    );
+    if (movieWatchlisted) {
+      setSimilarMovieDetails({ ...details.data, watchlisted: true });
+    } else {
+      setSimilarMovieDetails({ ...details.data, watchlisted: false });
+    }
+
+    // setSimilarMovieDetails(details.data);
   };
 
   const fetchSimilarMovies = async (movieId = id) => {
@@ -111,19 +121,6 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
         watchlisted: !similarMovieDetails.watchlisted
       });
       console.log(movieToAdd);
-      //   if (movieToAdd.watchlisted) {
-      //     setIsMovieWatchlisted(true);
-      //   } else {
-      //     setIsMovieWatchlisted(false);
-      //   }
-
-      //   if (watchlist.includes(similarMovieDetails)) {}
-      //   setIsSimilarMovieWatchlisted(1);
-      // Keeps track of similar movies in watchlist (for styling of heart icon)
-      //   setSimilarMoviesInWatchlist(prevState => [
-      //     ...prevState,
-      //     similarMovieDetails.id
-      //   ]);
     } else {
       movieToAdd = movieDetails;
       //   setIsSimilarMovieWatchlisted(0);
