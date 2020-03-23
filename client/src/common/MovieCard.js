@@ -24,7 +24,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const [movieDetails, setMovieDetails] = useState(movie);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [similarMovieDetails, setSimilarMovieDetails] = useState(null);
-  const [isWatchlisted, setIsWatchlisted] = useState(movie.watchlist);
+  const [similarMoviesInWatchlist, setSimilarMoviesInWatchlist] = useState([]);
 
   const {
     watchlisted,
@@ -46,13 +46,17 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     setModal(!modal);
     if (!modal) {
       fetchSimilarMovies();
-    } else {
+    }
+    // When modal closes, reset similarmovieDetails to reset modal with
+    // original data if users clicks again
+    else {
       setSimilarMovieDetails(null);
     }
   };
 
+  // Always stays the same
   let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/w780${movie.poster_path}`;
-  if (!movieDetails.poster_path || !IMG_MOVIE_CARD) {
+  if (!movie.poster_path || !IMG_MOVIE_CARD) {
     IMG_MOVIE_CARD = PosterUnavailable;
   }
 
@@ -89,6 +93,29 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     return '$' + money;
   };
 
+  const handleWatchlist = e => {
+    e.stopPropagation();
+    let movieToAdd = null;
+
+    // Checks if movie in modal has changed
+    if (similarMovieDetails) {
+      movieToAdd = similarMovieDetails;
+      // Keeps track of similar movies in watchlist (for styling of heart icon)
+      setSimilarMoviesInWatchlist(prevState => [
+        ...prevState,
+        similarMovieDetails.id
+      ]);
+    } else {
+      movieToAdd = movieDetails;
+    }
+
+    dispatch(toggleWatchlist(movieToAdd));
+  };
+
+  //   const checkIfWatchlisted = () => {
+  //     if (watchlisted || similarMoviesInWatchlist.includes(similar))
+  //   }
+
   useEffect(() => {
     const fetchAsync = async () => {
       fetchMovieDetails();
@@ -96,20 +123,17 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     fetchAsync();
   }, []);
 
+  // Makes sure "watchlisted" stays in sync with client state
+  // (b/c when movieDetails is fetched the server passes "watchlisted": false)
   useEffect(() => {
     setMovieDetails({ ...movieDetails, watchlisted: movie.watchlisted });
   }, [movie.watchlisted]);
 
-  console.log(movie.watchlisted);
-  //   onClick={() => dispatch(toggleWatchlist(movie))}
   return (
     <Movie background_img={`url(${IMG_MOVIE_CARD})`} onClick={toggle}>
       <IconContainer
-        watchlisted={watchlisted ? 1 : 0}
-        onClick={e => {
-          dispatch(toggleWatchlist(movieDetails));
-          e.stopPropagation();
-        }}
+        watchlisted={movie.watchlisted ? 1 : 0}
+        onClick={handleWatchlist}
       >
         <HeartIcon watchlisted={watchlisted ? 1 : 0} />
       </IconContainer>
@@ -117,7 +141,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
         <CustomModalBody>
           <IconContainer
             watchlisted={watchlisted ? 1 : 0}
-            onClick={() => dispatch(toggleWatchlist(movieDetails))}
+            onClick={handleWatchlist}
           >
             <HeartIcon watchlisted={watchlisted ? 1 : 0} />
           </IconContainer>
