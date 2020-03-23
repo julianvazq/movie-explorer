@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchLocalStorage,
-  add,
-  remove
-} from '../features/movies/slices/watchlistSlice';
+import { fetchLocalStorage } from '../features/movies/slices/watchlistSlice';
 import {
   nowPlayingState,
   toggleWatchlistNowPlaying
@@ -69,7 +65,7 @@ const GridWithPagination = ({ type }) => {
 
   // Dispatch action to fetch movies
   useEffect(() => {
-    // Call designated fetch action
+    // Call designated fetch action and fetch Page 1
     const fetch = determineFetch(type);
     dispatch(fetch(1));
 

@@ -5,7 +5,7 @@ import {
   setFailure,
   handleToggle,
   requestSuccess
-} from './ReusableLogic';
+} from './ReducerLogic';
 import axios from 'axios';
 
 export const nowPlayingMoviesSlice = createSlice({

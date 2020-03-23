@@ -118,7 +118,8 @@ export const Grid = styled.div`
 /* Movie Card */
 export const Movie = styled.article`
   border-radius: ${props => props.theme.borderRadius};
-  background: ${props => props.background_img};
+  background: ${props =>
+    props.background_img ? props.background_img : props.theme.dark};
   min-height: 200px;
   background-position: center;
   background-size: cover;
@@ -163,10 +164,6 @@ export const Movie = styled.article`
 
   @media (min-width: 750px) {
     min-height: 375px;
-
-    /* h1 {
-      font-size: 1.25rem;
-    } */
   }
 `;
 

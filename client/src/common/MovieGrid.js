@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
 import MovieCard from './MovieCard';
 import { Grid } from '../styles/styled-components';
+import Alert from './Alert';
 
 const MovieGrid = ({
   movies,
@@ -44,13 +45,15 @@ const MovieGrid = ({
     }
   }, [gridItems]);
 
-  //   if (status === 'failure') {
-  //     return <p>Oh no, something went wrong!</p>;
-  //   }
+  if (status === 'failure') {
+    return (
+      <Alert message='Oh no, something went wrong! Could not load movies.' />
+    );
+  }
 
-  //   if (status === 'idle' || status === 'loading') {
-  //     return <p>Loading...</p>;
-  //   }
+  if (status === 'idle' || status === 'loading') {
+    return <Alert message='Loading...' />;
+  }
 
   return (
     <>

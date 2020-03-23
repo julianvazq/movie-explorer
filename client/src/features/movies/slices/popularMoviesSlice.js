@@ -5,7 +5,7 @@ import {
   setFailure,
   handleToggle,
   requestSuccess
-} from './ReusableLogic';
+} from './ReducerLogic';
 import axios from 'axios';
 
 export const popularMoviesSlice = createSlice({
@@ -17,33 +17,10 @@ export const popularMoviesSlice = createSlice({
     error: null
   },
   reducers: {
-    toggle: (state, action) => {
-      const { id } = action.payload;
-      const movieToToggle = state.movies.find(movie => movie.id === id);
-      if (movieToToggle) {
-        movieToToggle.watchlisted = !movieToToggle.watchlisted;
-      }
-    },
-    startFetching: state => {
-      state.status = 'loading';
-    },
-    fetchingSuccess: (state, action) => {
-      const { results, total_pages } = action.payload;
-      const withDuplicates = state.movies.concat(results);
-      // Remove duplicates
-      state.movies = Array.from(
-        new Set(withDuplicates.map(movie => movie.id))
-      ).map(id => {
-        return withDuplicates.find(movie => movie.id === id);
-      });
-      state.pages = total_pages;
-      state.status = 'success';
-    },
-    fetchingFailed: (state, action) => {
-      console.log(action.payload);
-      state.error = action.payload;
-      state.status = 'failure';
-    }
+    toggle: handleToggle,
+    startFetching: setLoading,
+    fetchingFailed: setFailure,
+    fetchingSuccess: requestSuccess
   }
 });
 

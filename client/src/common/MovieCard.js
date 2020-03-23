@@ -143,8 +143,6 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     dispatch(toggleWatchlist(movieToAdd));
   };
 
-  console.log(watchlist);
-
   const checkIfMovieCardWatchlisted = () => {
     const movieToCheck = movieDetails;
 
