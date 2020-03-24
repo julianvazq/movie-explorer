@@ -50,6 +50,7 @@ export const MainHeading = styled.h1`
 
 export const Heading = styled.h2`
   font-size: 1.25rem;
+  margin-bottom: 0;
   padding-bottom: 0.5rem;
   display: inline-block;
   border-bottom: 1.5px solid ${props => props.theme.gold};
