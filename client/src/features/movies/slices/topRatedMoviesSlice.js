@@ -41,7 +41,7 @@ export const {
 export const fetchTopRatedMovies = page => async dispatch => {
   dispatch(startFetching());
   try {
-    const response = await axios.get(`/movies/topRated/${page}`);
+    const response = await axios.get(`/movies/toprated/${page}`);
     dispatch(fetchingSuccess(response.data));
   } catch (err) {
     console.log(err);

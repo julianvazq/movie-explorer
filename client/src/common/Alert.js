@@ -5,13 +5,13 @@ const AlertContainer = styled.div`
   text-align: center;
 `;
 
-const Alert = ({ message, button }) => {
-  const Message = styled.p`
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    color: ${props => props.theme.grayLight};
-  `;
+const Message = styled.p`
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: ${props => props.theme.grayLight};
+`;
 
+const Alert = ({ message, button }) => {
   return (
     <AlertContainer>
       <Message>{message}</Message>

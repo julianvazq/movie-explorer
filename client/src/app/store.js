@@ -11,6 +11,8 @@ export default configureStore({
     counter: counterReducer,
     watchlist: watchlistReducer,
     nowPlayingMovies: nowPlayingMoviesReducer,
-    popularMovies: popularMoviesReducer
+    topRatedMovies: topRatedMoviesReducer,
+    popularMovies: popularMoviesReducer,
+    upcomingMovies: upcomingMoviesReducer
   }
 });

@@ -6,6 +6,14 @@ import {
   toggleWatchlistNowPlaying
 } from '../features/movies/slices/nowPlayingMoviesSlice';
 import {
+  topRatedMoviesState,
+  toggleWatchlistTopRated
+} from '../features/movies/slices/topRatedMoviesSlice';
+import {
+  upcomingMoviesState,
+  toggleWatchlistUpcoming
+} from '../features/movies/slices/upcomingMoviesSlice';
+import {
   popularMoviesState,
   toggleWatchlistPopular
 } from '../features/movies/slices/popularMoviesSlice';
@@ -32,6 +40,8 @@ const GridWithPagination = ({ type }) => {
   const [width] = useWindowSize();
   const [gridItems, setGridItems] = useState(getInitialGridItems());
   const [nowPlayingCurrentPage, setNowPlayingCurrentPage] = useState(1);
+  const [upcomingCurrentPage, setUpcomingCurrentPage] = useState(1);
+  const [topRatedCurrentPage, setTopRatedCurrentPage] = useState(1);
   const [popularCurrentPage, setPopularCurrentPage] = useState(1);
 
   const {
@@ -39,6 +49,18 @@ const GridWithPagination = ({ type }) => {
     pages: nowPlayingMoviesPages,
     status: nowPlayingMoviesStatus
   } = useSelector(nowPlayingState);
+
+  const {
+    movies: upcomingMovies,
+    pages: upcomingMoviesPages,
+    status: upcomingMoviesStatus
+  } = useSelector(upcomingMoviesState);
+
+  const {
+    movies: topRatedMovies,
+    pages: topRatedMoviesPages,
+    status: topRatedMoviesStatus
+  } = useSelector(topRatedMoviesState);
 
   const {
     movies: popularMovies,
@@ -53,6 +75,16 @@ const GridWithPagination = ({ type }) => {
         setNowPlayingCurrentPage(prevState => prevState + 1);
         fetch = determineFetch(type);
         dispatch(fetch(nowPlayingCurrentPage + 1));
+        break;
+      case 'UPCOMING':
+        setUpcomingCurrentPage(prevState => prevState + 1);
+        fetch = determineFetch(type);
+        dispatch(fetch(upcomingCurrentPage + 1));
+        break;
+      case 'TOP_RATED':
+        setTopRatedCurrentPage(prevState => prevState + 1);
+        fetch = determineFetch(type);
+        dispatch(fetch(topRatedCurrentPage + 1));
         break;
       case 'POPULAR':
         setPopularCurrentPage(prevState => prevState + 1);
@@ -99,6 +131,30 @@ const GridWithPagination = ({ type }) => {
             gridItems={gridItems}
             currentPage={nowPlayingCurrentPage}
             maxPages={nowPlayingMoviesPages}
+          />
+        );
+      case 'TOP_RATED':
+        return (
+          <MovieGrid
+            movies={topRatedMovies}
+            status={topRatedMoviesStatus}
+            toggleWatchlist={toggleWatchlistTopRated}
+            fetchNextPage={fetchNextPage}
+            gridItems={gridItems}
+            currentPage={topRatedCurrentPage}
+            maxPages={topRatedMoviesPages}
+          />
+        );
+      case 'UPCOMING':
+        return (
+          <MovieGrid
+            movies={upcomingMovies}
+            status={upcomingMoviesStatus}
+            toggleWatchlist={toggleWatchlistUpcoming}
+            fetchNextPage={fetchNextPage}
+            gridItems={gridItems}
+            currentPage={upcomingCurrentPage}
+            maxPages={upcomingMoviesPages}
           />
         );
       case 'POPULAR':
