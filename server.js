@@ -8,11 +8,14 @@ const movies = require('./routes/movies');
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(express.static(`${__dirname}/client/build`));
 
 // Routes
 app.use('/movies', movies);
 
+/*** Uncomment before redeployment ***/
+app.use(express.static(`${__dirname}/client/build`));
+
+/*** Uncomment before redeployment ***/
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
