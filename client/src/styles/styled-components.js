@@ -118,6 +118,7 @@ export const Grid = styled.div`
 
 /* Movie Card */
 export const Movie = styled.article`
+  outline: 1px solid hsla(46, 0%, 60%, 0.2);
   border-radius: ${props => props.theme.borderRadius};
   background: ${props =>
     props.background_img ? props.background_img : props.theme.dark};
