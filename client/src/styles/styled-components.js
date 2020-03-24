@@ -358,9 +358,11 @@ export const IconContainer = styled.div`
   transform: scale(1);
   transition: all 250ms ease-in;
 
-  &:hover {
-    transform: scale(1.1);
-    background: hsla(46, 0%, 50%, 0.5);
+  @media (min-width: 900px) {
+    &:hover {
+      transform: scale(1.1);
+      background: hsla(46, 0%, 50%, 0.5);
+    }
   }
 `;
 
@@ -370,8 +372,10 @@ export const HeartIcon = styled(FaHeart)`
   color: ${props => (props.watchlisted ? props.theme.red : '#fff')};
   transition: color 250ms ease-in;
 
-  ${IconContainer}:hover & {
-    color: ${props => props.theme.red};
+  @media (min-width: 900px) {
+    ${IconContainer}:hover & {
+      color: ${props => props.theme.red};
+    }
   }
 `;
 
