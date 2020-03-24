@@ -12,7 +12,7 @@ const App = () => {
       <AppNavbar />
       <Switch>
         <Route path='/' exact component={Home} />
-        <Route path='/watchlist' exact component={Watchlist} />
+        <Route path='/watchlist' component={Watchlist} />
         <Route
           render={() => (
             <h2 style={{ textAlign: 'center', marginTop: '3rem' }}>
