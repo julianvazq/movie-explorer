@@ -58,14 +58,10 @@ const WatchlistGrid = () => {
           ))}
         </Grid>
       ) : (
-        <Alert
-          button={
-            <RedirectButton as={Link} to='/'>
-              Let's browse some movies
-            </RedirectButton>
-          }
-          message="There doesn't seem to be anything in your watchlist..."
-        ></Alert>
+        <Alert>
+          <p>There doesn't seem to be anything in your watchlist...</p>
+          <Link to='/'>Let's browse some movies</Link>
+        </Alert>
       )}
     </>
   );

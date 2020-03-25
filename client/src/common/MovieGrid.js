@@ -52,7 +52,11 @@ const MovieGrid = ({
   }
 
   if (status === 'idle' || status === 'loading') {
-    return <Alert message='Loading...' />;
+    return (
+      <Alert>
+        <p style={{ textAlign: 'left', marginTop: '1.5rem' }}>Loading...</p>
+      </Alert>
+    );
   }
 
   return (
