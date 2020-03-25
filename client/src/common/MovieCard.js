@@ -77,7 +77,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   // Changes when similar movie is selected
   let IMG_THUMBNAIL_URL = `https://image.tmdb.org/t/p/w500${poster_path}`;
-  if (!poster_path && !IMG_THUMBNAIL_URL) {
+  if (!poster_path || !IMG_THUMBNAIL_URL) {
     IMG_THUMBNAIL_URL = PosterUnavailable;
   }
 
@@ -217,24 +217,30 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
                     ))}
                   </Details>
                 )}
-                <Details>
-                  <h3>Runtime</h3>
-                  <p>{runtime} minutes</p>
-                </Details>
-                <Details hidden={window.innerWidth < 375 ? true : false}>
-                  <h3>Released</h3>
-                  <p>{getYear(release_date)}</p>
-                </Details>
+                {runtime ? (
+                  <Details>
+                    <h3>Runtime</h3>
+                    <p>{runtime} minutes</p>
+                  </Details>
+                ) : null}
+                {release_date ? (
+                  <Details hidden={window.innerWidth < 375 ? true : false}>
+                    <h3>Released</h3>
+                    <p>{getYear(release_date)}</p>
+                  </Details>
+                ) : null}
                 {vote_average ? (
                   <Details hidden={window.innerWidth < 375 ? true : false}>
                     <h3>Rating</h3>
                     <p>{vote_average}</p>
                   </Details>
                 ) : null}
-                <Details hidden={window.innerWidth < 450 ? true : false}>
-                  <h3>Language</h3>
-                  <p>{original_language.toUpperCase()}</p>
-                </Details>
+                {original_language ? (
+                  <Details hidden={window.innerWidth < 450 ? true : false}>
+                    <h3>Language</h3>
+                    <p>{original_language.toUpperCase()}</p>
+                  </Details>
+                ) : null}
                 {homepage ? (
                   <Details hidden={window.innerWidth < 450 ? true : false}>
                     <h3>Website</h3>
