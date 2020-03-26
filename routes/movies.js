@@ -117,6 +117,26 @@ router.get('/:id/similar/:page', async (req, res) => {
   }
 });
 
+//@route GET /movies/:id/recommendations/:page
+//@desc Get RECOMMENDATIONS from Movie ID
+router.get('/:id/recommendations/:page', async (req, res) => {
+  try {
+    // Destructure data from client
+    const { page, id } = req.params;
+
+    const data = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${process.env.API_KEY}&language=en-US&page=${page}`
+    );
+    const movies = await data.json();
+
+    const changedMovies = addWatchlistedProperty(movies);
+    res.send(changedMovies);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: 'Request failed!' });
+  }
+});
+
 //@route GET /movies/random
 //@desc Get RANDOM Movie
 router.get('/random', async (req, res) => {

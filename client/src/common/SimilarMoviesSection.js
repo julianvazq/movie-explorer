@@ -10,7 +10,7 @@ const SimilarMoviesSection = ({ similarMovies, gridItems, change }) => {
   return (
     <SimilarMoviesContainer>
       <SimilarMoviesHeading>Similar Movies</SimilarMoviesHeading>
-      {similarMovies.length ? (
+      {similarMovies && similarMovies.length ? (
         <SimilarMoviesGrid>
           {similarMovies.slice(0, gridItems).map(movie => (
             <SimilarMovie

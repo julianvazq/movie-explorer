@@ -103,7 +103,9 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
 
   const fetchSimilarMovies = async (movieId = id) => {
     const similarMovies = await axios.get(`/movies/${movieId}/similar/1`);
-    setSimilarMovies(similarMovies.data.results);
+    if (similarMovies.data.results) {
+      setSimilarMovies(similarMovies.data.results);
+    }
   };
 
   const changeToSimilarMovie = async id => {
