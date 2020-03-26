@@ -33,7 +33,8 @@ const WatchlistGrid = () => {
       const { id } = movie;
       const response = await axios.get(`/movies/${id}/recommendations/1`);
 
-      let newMovies = response.data.results;
+      console.log(response);
+      let newMovies = response.data.results || [];
       if (newMovies.length) {
         newMovies = newMovies.slice(0, 5);
       }
