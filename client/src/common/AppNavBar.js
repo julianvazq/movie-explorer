@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { watchlistState } from '../features/movies/slices/watchlistSlice';
 import { FaGithub, FaFilm } from 'react-icons/fa';
+import { GiPopcorn } from 'react-icons/gi';
 import { Badge } from 'reactstrap';
 import styled from 'styled-components';
 
@@ -10,6 +11,9 @@ const Nav = styled.nav`
   background: ${props => props.theme.gray};
   color: ${props => props.theme.light};
   height: 60px;
+  width: 100%;
+  position: fixed;
+  z-index: 12;
 `;
 
 const NavInnerContainer = styled.div`
@@ -85,7 +89,8 @@ const AppNavbar = props => {
       <NavInnerContainer>
         <Link to='/'>
           <LogoContainer>
-            <FaFilm />
+            <GiPopcorn />
+            {/* <FaFilm /> */}
           </LogoContainer>
         </Link>
         <NavList>

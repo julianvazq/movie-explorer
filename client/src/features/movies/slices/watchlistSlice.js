@@ -37,10 +37,6 @@ export const fetchLocalStorage = () => async (dispatch, getState) => {
   try {
     const storedMovies = JSON.parse(localStorage.getItem('movies') || '[]');
     dispatch(getLocalStorageSuccess(storedMovies));
-
-    // localStorage.setItem('movies', JSON.stringify([]));
-    // const storedMovies = localStorage.getItem('movies');
-    // console.log(storedMovies);
   } catch (error) {
     console.log(error);
   }

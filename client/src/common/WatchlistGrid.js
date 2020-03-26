@@ -33,7 +33,6 @@ const WatchlistGrid = () => {
       const { id } = movie;
       const response = await axios.get(`/movies/${id}/recommendations/1`);
 
-      console.log(response);
       let newMovies = response.data.results || [];
       if (newMovies.length) {
         newMovies = newMovies.slice(0, 5);
@@ -41,29 +40,23 @@ const WatchlistGrid = () => {
       const uniqueMovies = removeDuplicates(newRecommendations, newMovies);
       newRecommendations = [...uniqueMovies];
     }
-    console.log('last pass');
     const newMoviesRecommended = filterOutWatchlist(newRecommendations);
-    // console.log(newMoviesRecommended, newRecommendations);
     setRecommendedMovies(newMoviesRecommended);
   };
 
   const filterOutWatchlist = recommendations => {
-    console.log('prefilter ', recommendations);
     const filteredRecommendations = recommendations.filter(
       movie => !watchlist.some(m => m.id === movie.id)
     );
 
-    console.log('postfilter ', filteredRecommendations);
     return filteredRecommendations;
   };
 
   const removeDuplicates = (firstArray, secondArray) => {
     const combinedArrays = [...firstArray, ...secondArray];
-    // console.log(combinedArrays);
     const uniqueMovies = combinedArrays.filter(
       (movie, index, self) => index === self.findIndex(m => m.id === movie.id)
     );
-    // console.log(uniqueMovies);
     return uniqueMovies;
   };
 

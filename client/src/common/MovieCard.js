@@ -137,7 +137,6 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
         ...similarMovieDetails,
         watchlisted: !similarMovieDetails.watchlisted
       });
-      console.log(movieToAdd);
     } else {
       movieToAdd = movieDetails;
     }
