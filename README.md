@@ -31,7 +31,7 @@ cd client
 npm install 
 ```
 
-## Tech
+## Tech Stack
 
 ### Frontend
 
