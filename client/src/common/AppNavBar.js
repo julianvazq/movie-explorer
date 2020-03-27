@@ -65,13 +65,15 @@ const CustomBadge = styled(Badge)`
   padding-right: 0.6em;
   padding-left: 0.55em;
   margin-left: 0.3rem;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   height: 19px;
   width: 20px;
-  line-height: 1;
+  line-height: 0.9;
   position: absolute;
   top: 16px;
   right: -7px;
+  display: flex;
+  justify-content: center;
 `;
 
 const GithubIcon = styled(FaGithub)`
@@ -99,12 +101,15 @@ const AppNavbar = props => {
           </Link>
           <Link to='/watchlist'>
             <NavItem>
-              Watchlist<CustomBadge pill>{watchlist.length}</CustomBadge>
+              Watchlist
+              <CustomBadge pill>
+                <span>{watchlist.length}</span>
+              </CustomBadge>
             </NavItem>
           </Link>
           <NavItem>
             <a
-              href='https://github.com/julianvazq'
+              href='https://github.com/julianvazq/movie-explorer'
               target='_blank'
               rel='noopener noreferrer'
             >

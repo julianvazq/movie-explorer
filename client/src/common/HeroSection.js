@@ -5,17 +5,25 @@ import {
   HeartIcon
 } from '../styles/styled-components';
 import styled from 'styled-components';
-import IronManImage from '../images/iron_man.jpg';
+import IronManImageMedium from '../images/iron_man_md.jpg';
+import IronManImageLarge from '../images/iron_man_lg.jpg';
 
 const FullWidthBackground = styled(FullWidthContainer)`
   color: #fff;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url(${IronManImage});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top;
+
+  @media (min-width: 1px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url(${IronManImageMedium});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+  }
 
   @media (min-width: 850px) {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+      url(${IronManImageLarge});
+    background-repeat: no-repeat;
+    background-size: cover;
     background-position: unset;
   }
 `;
@@ -83,7 +91,7 @@ const Paragraph = styled.p`
 
 const HeroSection = () => {
   return (
-    <div style={{ background: 'red' }}>
+    <div style={{ background: 'hsl(250, 40%, 5%)' }}>
       <FullWidthBackground>
         <Container>
           <MainHeading>Movie Explorer</MainHeading>

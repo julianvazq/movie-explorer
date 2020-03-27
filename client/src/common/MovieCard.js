@@ -69,14 +69,21 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     }
   };
 
+  let width = 'w500';
+  if (gridItems <= 4) {
+    width = 'w342';
+  } else {
+    width = 'w500';
+  }
+
   // Always stays the same
-  let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/w780${movie.poster_path}`;
+  let IMG_MOVIE_CARD = `https://image.tmdb.org/t/p/${width}${movie.poster_path}`;
   if (!movie.poster_path || !IMG_MOVIE_CARD) {
     IMG_MOVIE_CARD = PosterUnavailable;
   }
 
   // Changes when similar movie is selected
-  let IMG_THUMBNAIL_URL = `https://image.tmdb.org/t/p/w500${poster_path}`;
+  let IMG_THUMBNAIL_URL = `https://image.tmdb.org/t/p/w342${poster_path}`;
   if (!poster_path || !IMG_THUMBNAIL_URL) {
     IMG_THUMBNAIL_URL = PosterUnavailable;
   }
