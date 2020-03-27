@@ -30,6 +30,11 @@ and
 cd client
 npm install 
 ```
+To start the server and client concurrently, go to the root directory and enter:
+
+```bash
+npm run dev 
+```
 
 The project will start running on http://localhost:3000.
 
