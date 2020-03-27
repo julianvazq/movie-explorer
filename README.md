@@ -31,6 +31,8 @@ cd client
 npm install 
 ```
 
+The project will start running on http://localhost:3000.
+
 ## Tech Stack
 
 ### Frontend
