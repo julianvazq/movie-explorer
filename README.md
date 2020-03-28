@@ -8,6 +8,7 @@ The design for Movie Explorer was created from scratch based on multiple paper w
 - React & Redux 
 - Node & Express
 - UX/UI Design
+- Mobile first design
 - Responsive Design
 - Responsive Images
 
