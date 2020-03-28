@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { watchlistState } from '../features/movies/slices/watchlistSlice';
-import { FaGithub, FaFilm } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
 import { GiPopcorn } from 'react-icons/gi';
 import { Badge } from 'reactstrap';
 import styled from 'styled-components';

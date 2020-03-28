@@ -5,7 +5,7 @@ import { FaHeart } from 'react-icons/fa';
 
 /* Containers */
 export const FullWidthContainer = styled.section`
-  padding: 2rem 0.5rem;
+  padding: 2rem 1rem;
   background-color: ${props => (props.bg ? props.bg : props.theme.dark)};
   min-height: 100vh;
 
@@ -270,7 +270,6 @@ export const Description = styled.p`
 `;
 
 export const SimilarMoviesContainer = styled.section`
-  /* min-height: 150px; */
   padding: 1.125rem;
   border-radius: ${props => props.theme.borderRadius};
   background: ${props => props.theme.dark};
