@@ -1,24 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchLocalStorage } from '../features/movies/slices/watchlistSlice';
-import {
-  nowPlayingState,
-  toggleWatchlistNowPlaying
-} from '../features/movies/slices/nowPlayingMoviesSlice';
-import {
-  topRatedMoviesState,
-  toggleWatchlistTopRated
-} from '../features/movies/slices/topRatedMoviesSlice';
-import {
-  upcomingMoviesState,
-  toggleWatchlistUpcoming
-} from '../features/movies/slices/upcomingMoviesSlice';
-import {
-  popularMoviesState,
-  toggleWatchlistPopular
-} from '../features/movies/slices/popularMoviesSlice';
 import MovieGrid from './MovieGrid';
-import { determineFetch } from '../features/movies/slices/GetReducers';
+import {
+  determineFetch,
+  determineToggleWatchlist
+} from '../features/movies/slices/GetReducers';
 import useWindowSize from '../hooks/useWindowSize';
 
 const getInitialGridItems = () => {
@@ -35,45 +22,21 @@ const getInitialGridItems = () => {
   }
 };
 
-const GridWithPagination = ({ type }) => {
+const GridWithPagination = ({ type, selector }) => {
   const dispatch = useDispatch();
   const [width] = useWindowSize();
   const [gridItems, setGridItems] = useState(getInitialGridItems());
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {
-    movies: nowPlayingMovies,
-    pages: nowPlayingMoviesPages,
-    status: nowPlayingMoviesStatus
-  } = useSelector(nowPlayingState);
-
-  const {
-    movies: upcomingMovies,
-    pages: upcomingMoviesPages,
-    status: upcomingMoviesStatus
-  } = useSelector(upcomingMoviesState);
-
-  const {
-    movies: topRatedMovies,
-    pages: topRatedMoviesPages,
-    status: topRatedMoviesStatus
-  } = useSelector(topRatedMoviesState);
-
-  const {
-    movies: popularMovies,
-    pages: popularMoviesPages,
-    status: popularMoviesStatus
-  } = useSelector(popularMoviesState);
+  // Conditionally selects movie slice from Redux store
+  const { movies, pages, status } = useSelector(state => state[selector]);
+  const toggleWatchlist = determineToggleWatchlist(type);
 
   // Closure retains currentPage for each individual movie grid
   const fetchNextPage = () => {
     const fetch = determineFetch(type);
-    const next = () => {
-      setCurrentPage(currentPage + 1);
-      dispatch(fetch(currentPage + 1));
-    };
-
-    return next;
+    setCurrentPage(currentPage + 1);
+    dispatch(fetch(currentPage + 1));
   };
 
   // Dispatch action to fetch movies
@@ -100,60 +63,17 @@ const GridWithPagination = ({ type }) => {
     }
   }, [width]);
 
-  const createGridComponent = () => {
-    switch (type) {
-      case 'NOW_PLAYING':
-        return (
-          <MovieGrid
-            movies={nowPlayingMovies}
-            status={nowPlayingMoviesStatus}
-            toggleWatchlist={toggleWatchlistNowPlaying}
-            fetchNextPage={fetchNextPage()}
-            gridItems={gridItems}
-            currentPage={currentPage}
-            maxPages={nowPlayingMoviesPages}
-          />
-        );
-      case 'TOP_RATED':
-        return (
-          <MovieGrid
-            movies={topRatedMovies}
-            status={topRatedMoviesStatus}
-            toggleWatchlist={toggleWatchlistTopRated}
-            fetchNextPage={fetchNextPage()}
-            gridItems={gridItems}
-            currentPage={currentPage}
-            maxPages={topRatedMoviesPages}
-          />
-        );
-      case 'UPCOMING':
-        return (
-          <MovieGrid
-            movies={upcomingMovies}
-            status={upcomingMoviesStatus}
-            toggleWatchlist={toggleWatchlistUpcoming}
-            fetchNextPage={fetchNextPage()}
-            gridItems={gridItems}
-            currentPage={currentPage}
-            maxPages={upcomingMoviesPages}
-          />
-        );
-      case 'POPULAR':
-        return (
-          <MovieGrid
-            movies={popularMovies}
-            status={popularMoviesStatus}
-            toggleWatchlist={toggleWatchlistPopular}
-            fetchNextPage={fetchNextPage()}
-            gridItems={gridItems}
-            currentPage={currentPage}
-            maxPages={popularMoviesPages}
-          />
-        );
-    }
-  };
-
-  return <>{createGridComponent()}</>;
+  return (
+    <MovieGrid
+      movies={movies}
+      status={status}
+      toggleWatchlist={toggleWatchlist}
+      fetchNextPage={fetchNextPage}
+      gridItems={gridItems}
+      currentPage={currentPage}
+      maxPages={pages}
+    />
+  );
 };
 
 export default GridWithPagination;

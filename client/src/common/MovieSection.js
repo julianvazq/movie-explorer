@@ -5,10 +5,22 @@ import { FullWidthContainer } from '../styles/styled-components';
 const MovieSection = () => {
   return (
     <FullWidthContainer>
-      <GridSection type='NOW_PLAYING' heading='Now Playing in Theatres' />
-      <GridSection type='TOP_RATED' heading='Top Rated' />
-      <GridSection type='POPULAR' heading='Popular' />
-      <GridSection type='UPCOMING' heading='Upcoming' />
+      <GridSection
+        type='NOW_PLAYING'
+        selector='nowPlayingMovies'
+        heading='Now Playing in Theatres'
+      />
+      <GridSection
+        type='TOP_RATED'
+        selector='topRatedMovies'
+        heading='Top Rated'
+      />
+      <GridSection type='POPULAR' selector='popularMovies' heading='Popular' />
+      <GridSection
+        type='UPCOMING'
+        selector='upcomingMovies'
+        heading='Upcoming'
+      />
     </FullWidthContainer>
   );
 };
