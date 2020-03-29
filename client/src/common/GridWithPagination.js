@@ -39,10 +39,7 @@ const GridWithPagination = ({ type }) => {
   const dispatch = useDispatch();
   const [width] = useWindowSize();
   const [gridItems, setGridItems] = useState(getInitialGridItems());
-  const [nowPlayingCurrentPage, setNowPlayingCurrentPage] = useState(1);
-  const [upcomingCurrentPage, setUpcomingCurrentPage] = useState(1);
-  const [topRatedCurrentPage, setTopRatedCurrentPage] = useState(1);
-  const [popularCurrentPage, setPopularCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     movies: nowPlayingMovies,
@@ -68,31 +65,15 @@ const GridWithPagination = ({ type }) => {
     status: popularMoviesStatus
   } = useSelector(popularMoviesState);
 
+  // Closure retains currentPage for each individual movie grid
   const fetchNextPage = () => {
-    let fetch = null;
-    switch (type) {
-      case 'NOW_PLAYING':
-        setNowPlayingCurrentPage(prevState => prevState + 1);
-        fetch = determineFetch(type);
-        dispatch(fetch(nowPlayingCurrentPage + 1));
-        break;
-      case 'UPCOMING':
-        setUpcomingCurrentPage(prevState => prevState + 1);
-        fetch = determineFetch(type);
-        dispatch(fetch(upcomingCurrentPage + 1));
-        break;
-      case 'TOP_RATED':
-        setTopRatedCurrentPage(prevState => prevState + 1);
-        fetch = determineFetch(type);
-        dispatch(fetch(topRatedCurrentPage + 1));
-        break;
-      case 'POPULAR':
-        setPopularCurrentPage(prevState => prevState + 1);
-        fetch = determineFetch(type);
-        dispatch(fetch(popularCurrentPage + 1));
-        break;
-      default:
-    }
+    const fetch = determineFetch(type);
+    const next = () => {
+      setCurrentPage(currentPage + 1);
+      dispatch(fetch(currentPage + 1));
+    };
+
+    return next;
   };
 
   // Dispatch action to fetch movies
@@ -127,9 +108,9 @@ const GridWithPagination = ({ type }) => {
             movies={nowPlayingMovies}
             status={nowPlayingMoviesStatus}
             toggleWatchlist={toggleWatchlistNowPlaying}
-            fetchNextPage={fetchNextPage}
+            fetchNextPage={fetchNextPage()}
             gridItems={gridItems}
-            currentPage={nowPlayingCurrentPage}
+            currentPage={currentPage}
             maxPages={nowPlayingMoviesPages}
           />
         );
@@ -139,9 +120,9 @@ const GridWithPagination = ({ type }) => {
             movies={topRatedMovies}
             status={topRatedMoviesStatus}
             toggleWatchlist={toggleWatchlistTopRated}
-            fetchNextPage={fetchNextPage}
+            fetchNextPage={fetchNextPage()}
             gridItems={gridItems}
-            currentPage={topRatedCurrentPage}
+            currentPage={currentPage}
             maxPages={topRatedMoviesPages}
           />
         );
@@ -151,9 +132,9 @@ const GridWithPagination = ({ type }) => {
             movies={upcomingMovies}
             status={upcomingMoviesStatus}
             toggleWatchlist={toggleWatchlistUpcoming}
-            fetchNextPage={fetchNextPage}
+            fetchNextPage={fetchNextPage()}
             gridItems={gridItems}
-            currentPage={upcomingCurrentPage}
+            currentPage={currentPage}
             maxPages={upcomingMoviesPages}
           />
         );
@@ -163,9 +144,9 @@ const GridWithPagination = ({ type }) => {
             movies={popularMovies}
             status={popularMoviesStatus}
             toggleWatchlist={toggleWatchlistPopular}
-            fetchNextPage={fetchNextPage}
+            fetchNextPage={fetchNextPage()}
             gridItems={gridItems}
-            currentPage={popularCurrentPage}
+            currentPage={currentPage}
             maxPages={popularMoviesPages}
           />
         );
