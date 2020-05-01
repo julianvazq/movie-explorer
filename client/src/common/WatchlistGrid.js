@@ -4,12 +4,12 @@ import { fetchLocalStorage } from '../features/movies/slices/watchlistSlice';
 import { Link } from 'react-router-dom';
 import {
   watchlistState,
-  toggleWatchlist
+  toggleWatchlist,
 } from '../features/movies/slices/watchlistSlice';
 import {
   Grid,
   Heading,
-  MovieSectionContainer
+  MovieSectionContainer,
 } from '../styles/styled-components';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -44,9 +44,9 @@ const WatchlistGrid = () => {
     setRecommendedMovies(newMoviesRecommended);
   };
 
-  const filterOutWatchlist = recommendations => {
+  const filterOutWatchlist = (recommendations) => {
     const filteredRecommendations = recommendations.filter(
-      movie => !watchlist.some(m => m.id === movie.id)
+      (movie) => !watchlist.some((m) => m.id === movie.id)
     );
 
     return filteredRecommendations;
@@ -55,7 +55,7 @@ const WatchlistGrid = () => {
   const removeDuplicates = (firstArray, secondArray) => {
     const combinedArrays = [...firstArray, ...secondArray];
     const uniqueMovies = combinedArrays.filter(
-      (movie, index, self) => index === self.findIndex(m => m.id === movie.id)
+      (movie, index, self) => index === self.findIndex((m) => m.id === movie.id)
     );
     return uniqueMovies;
   };
@@ -76,7 +76,7 @@ const WatchlistGrid = () => {
         <>
           <MovieSectionContainer>
             <Grid>
-              {watchlist.map(movie => (
+              {watchlist.map((movie) => (
                 <MovieCard
                   key={movie.id}
                   movie={movie}
@@ -85,11 +85,13 @@ const WatchlistGrid = () => {
               ))}
             </Grid>
           </MovieSectionContainer>
-          <Heading style={{ marginBottom: '3rem' }}>
-            Based on your watchlist, you <em>may</em> enjoy...
-          </Heading>
+          {recommendedMovies.length > 0 && (
+            <Heading style={{ marginBottom: '3rem' }}>
+              Based on your watchlist, you <em>may</em> enjoy...
+            </Heading>
+          )}
           <Grid>
-            {recommendedMovies.map(movie => (
+            {recommendedMovies.map((movie) => (
               <MovieCard
                 key={movie.id}
                 movie={movie}

@@ -11,15 +11,15 @@ const MovieGrid = ({
   currentPage,
   toggleWatchlist,
   fetchNextPage,
-  gridItems
+  gridItems,
 }) => {
   const [firstMovieVisible, setFirstMovieVisible] = useState(0);
   const [lastMovieVisible, setLastMovieVisible] = useState(gridItems);
 
   const showPreviousMovies = () => {
     if (firstMovieVisible >= gridItems) {
-      setFirstMovieVisible(prevState => prevState - gridItems);
-      setLastMovieVisible(prevState => prevState - gridItems);
+      setFirstMovieVisible((prevState) => prevState - gridItems);
+      setLastMovieVisible((prevState) => prevState - gridItems);
     } else {
       setFirstMovieVisible(0);
       setLastMovieVisible(gridItems);
@@ -34,14 +34,14 @@ const MovieGrid = ({
       await fetchNextPage();
     }
 
-    setFirstMovieVisible(prevState => prevState + gridItems);
-    setLastMovieVisible(prevState => prevState + gridItems);
+    setFirstMovieVisible((prevState) => prevState + gridItems);
+    setLastMovieVisible((prevState) => prevState + gridItems);
   };
   useEffect(() => {
     const moviesShowing = Math.abs(lastMovieVisible - firstMovieVisible);
     const moviesToFill = gridItems - moviesShowing;
     if (lastMovieVisible + moviesToFill < movies.length) {
-      setLastMovieVisible(prevState => prevState + moviesToFill);
+      setLastMovieVisible((prevState) => prevState + moviesToFill);
     }
   }, [gridItems]);
 
@@ -54,7 +54,14 @@ const MovieGrid = ({
   if (status === 'idle' || status === 'loading') {
     return (
       <Alert>
-        <p style={{ textAlign: 'left', marginTop: '1.5rem' }}>Loading...</p>
+        <p
+          style={{
+            textAlign: 'left',
+            marginTop: '1.5rem',
+          }}
+        >
+          Loading...
+        </p>
       </Alert>
     );
   }
@@ -68,7 +75,7 @@ const MovieGrid = ({
         showNextMovies={showNextMovies}
       />
       <Grid>
-        {movies.slice(firstMovieVisible, lastMovieVisible).map(movie => (
+        {movies.slice(firstMovieVisible, lastMovieVisible).map((movie) => (
           <MovieCard
             key={movie.id}
             status={status}
