@@ -8,7 +8,7 @@ const MovieSection = () => {
       <GridSection
         type='NOW_PLAYING'
         selector='nowPlayingMovies'
-        heading='Now Playing in Theatres'
+        heading='Now Playing'
       />
       <GridSection
         type='TOP_RATED'

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   FullWidthContainer,
   IconContainer,
-  HeartIcon
+  HeartIcon,
 } from '../styles/styled-components';
 import styled from 'styled-components';
 import IronManImageMedium from '../images/iron_man_md.jpg';
@@ -66,11 +66,11 @@ const FlexContainer = styled.div`
   margin: 4rem auto 0 auto;
   padding: 1rem;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${(props) => props.theme.borderRadius};
 `;
 
 const Heart = styled(HeartIcon)`
-  color: ${props => props.theme.red};
+  color: ${(props) => props.theme.red};
 `;
 
 const InnerIconContainer = styled(IconContainer)`
@@ -97,11 +97,9 @@ const HeroSection = () => {
           <MainHeading>Movie Explorer</MainHeading>
           <SubHeading>Discover awesome movies.</SubHeading>
           <FlexContainer>
-            {/* <OuterContainer> */}
             <InnerIconContainer>
               <Heart />
             </InnerIconContainer>
-            {/* </OuterContainer> */}
             <Paragraph>click the heart icon to add to watchlist</Paragraph>
           </FlexContainer>
         </Container>

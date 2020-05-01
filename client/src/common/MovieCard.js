@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   watchlistState,
-  remove
+  remove,
 } from '../features/movies/slices/watchlistSlice';
 import axios from 'axios';
 import {
@@ -18,7 +18,7 @@ import {
   Details,
   Description,
   IconContainer,
-  HeartIcon
+  HeartIcon,
 } from '../styles/styled-components';
 import SimilarMoviesSection from './SimilarMoviesSection';
 import PosterUnavailable from '../images/poster_unavailable.png';
@@ -48,7 +48,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     budget,
     revenue,
     vote_average,
-    homepage
+    homepage,
   } = similarMovieDetails ? similarMovieDetails : movieDetails;
 
   // For Watchlist Component
@@ -93,11 +93,11 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     setMovieDetails({ ...details.data, watchlisted: movie.watchlisted });
   };
 
-  const fetchSimilarMovieDetails = async id => {
+  const fetchSimilarMovieDetails = async (id) => {
     const details = await axios.get(`/movies/${id}`);
 
     const movieWatchlisted = watchlist.find(
-      movie => movie.id === details.data.id
+      (movie) => movie.id === details.data.id
     );
     if (movieWatchlisted) {
       setSimilarMovieDetails({ ...details.data, watchlisted: true });
@@ -115,22 +115,22 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     }
   };
 
-  const changeToSimilarMovie = async id => {
+  const changeToSimilarMovie = async (id) => {
     fetchSimilarMovieDetails(id);
     fetchSimilarMovies(id);
   };
 
-  const formatMoney = num => {
+  const formatMoney = (num) => {
     const money = num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     return '$' + money;
   };
 
-  const getYear = date => {
+  const getYear = (date) => {
     const dateObj = new Date(date);
     return dateObj.getFullYear();
   };
 
-  const handleWatchlist = e => {
+  const handleWatchlist = (e) => {
     e.stopPropagation();
     let movieToAdd = null;
 
@@ -138,11 +138,11 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
     if (similarMovieDetails) {
       movieToAdd = {
         watchlisted: !similarMovieDetails.watchlisted,
-        ...similarMovieDetails
+        ...similarMovieDetails,
       };
       setSimilarMovieDetails({
         ...similarMovieDetails,
-        watchlisted: !similarMovieDetails.watchlisted
+        watchlisted: !similarMovieDetails.watchlisted,
       });
     } else {
       movieToAdd = movieDetails;
@@ -154,7 +154,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
   const checkIfMovieCardWatchlisted = () => {
     const movieToCheck = movieDetails;
 
-    const found = watchlist.find(movie => movie.id === movieToCheck.id);
+    const found = watchlist.find((movie) => movie.id === movieToCheck.id);
 
     // Using 1s and 0s because of Styled Components limitation with boolean props
     if (found) {
@@ -170,7 +170,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
       ? similarMovieDetails
       : movieDetails;
 
-    const found = watchlist.find(movie => movie.id === movieToCheck.id);
+    const found = watchlist.find((movie) => movie.id === movieToCheck.id);
 
     if (found) {
       setIsMovieModalWatchlisted(true);
@@ -220,7 +220,7 @@ const MovieCard = ({ movie, toggleWatchlist, gridItems }) => {
                 {genres && (
                   <Details>
                     <h3>Genres</h3>
-                    {genres.slice(0, 3).map(genre => (
+                    {genres.slice(0, 3).map((genre) => (
                       <p key={genre.id}>{genre.name}</p>
                     ))}
                   </Details>

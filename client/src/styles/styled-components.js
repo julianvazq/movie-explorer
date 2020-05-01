@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import { Modal, ModalBody, Badge } from 'reactstrap';
+import styled, { keyframes } from 'styled-components';
+import { Modal, ModalBody } from 'reactstrap';
 import { MdClose } from 'react-icons/md';
 import { FaHeart } from 'react-icons/fa';
 
 /* Containers */
 export const FullWidthContainer = styled.section`
   padding: 2rem 1rem;
-  background-color: ${props => (props.bg ? props.bg : props.theme.dark)};
+  background-color: ${(props) => (props.bg ? props.bg : props.theme.dark)};
   min-height: 100vh;
 
   @media (min-width: 600px) {
@@ -28,8 +28,8 @@ export const Heading = styled.h2`
   margin-bottom: 0;
   padding-bottom: 0.5rem;
   display: inline-block;
-  border-bottom: 1.5px solid ${props => props.theme.gold};
-  color: ${props => props.theme.light};
+  border-bottom: 1.5px solid ${(props) => props.theme.gold};
+  color: ${(props) => props.theme.light};
 
   @media (min-width: 500px) {
     font-size: 1.5rem;
@@ -64,7 +64,7 @@ export const PaginationButton = styled.span`
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-weight: bold;
-  color: ${props => props.theme.grayLight};
+  color: ${(props) => props.theme.grayLight};
   cursor: pointer;
 `;
 
@@ -91,11 +91,21 @@ export const Grid = styled.div`
   }
 `;
 
+const fadeIn = keyframes`
+        0% { 
+            opacity: 0; 
+        }
+        100% { 
+            opacity: 1; 
+        } 
+`;
+
 /* Movie Card */
 export const Movie = styled.article`
+  animation: ${fadeIn} 250ms ease-in;
   box-shadow: 0px 0px 5px 1px rgba(133, 133, 133, 0.15);
-  border-radius: ${props => props.theme.borderRadius};
-  background: ${props =>
+  border-radius: ${(props) => props.theme.borderRadius};
+  background: ${(props) =>
     props.background_img ? props.background_img : props.theme.dark};
   min-height: 200px;
   background-position: center;
@@ -103,7 +113,7 @@ export const Movie = styled.article`
   background-repeat: no-repeat;
   transform: scale(1);
   transition: background 250ms ease-in, transform 250ms ease-in-out;
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
   display: flex;
 
   h1 {
@@ -118,7 +128,7 @@ export const Movie = styled.article`
 
   &:hover {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-      ${props => props.background_img};
+      ${(props) => props.background_img};
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -146,8 +156,8 @@ export const Movie = styled.article`
 
 /* Movie Modal */
 export const CustomModal = styled(Modal)`
-  background: ${props => props.theme.gray} !important;
-  border-radius: ${props => props.theme.borderRadius};
+  background: ${(props) => props.theme.gray} !important;
+  border-radius: ${(props) => props.theme.borderRadius};
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.22), 0 2px 2px rgba(0, 0, 0, 0.22),
     0 4px 4px rgba(0, 0, 0, 0.22), 0 8px 8px rgba(0, 0, 0, 0.22),
     0 16px 16px rgba(0, 0, 0, 0.22);
@@ -164,14 +174,14 @@ export const CustomModal = styled(Modal)`
 
 export const CustomModalBody = styled(ModalBody)`
   padding: 0;
-  background: ${props => props.theme.gray} !important;
+  background: ${(props) => props.theme.gray} !important;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.52), 0 2px 2px rgba(0, 0, 0, 0.52),
     0 4px 4px rgba(0, 0, 0, 0.52), 0 8px 8px rgba(0, 0, 0, 0.52),
     0 16px 16px rgba(0, 0, 0, 0.52);
 `;
 
 export const MainDiv = styled.div`
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
   padding: 1.25rem 1.25rem 0.625rem;
   display: flex;
   min-height: 200px;
@@ -182,8 +192,8 @@ export const ImageContainer = styled.div`
 `;
 export const MovieImage = styled.img`
   width: 90%;
-  border-radius: ${props => props.theme.borderRadius};
-  background: ${props => props.background_img};
+  border-radius: ${(props) => props.theme.borderRadius};
+  background: ${(props) => props.background_img};
   background-position: left;
   background-size: contain;
   background-repeat: no-repeat;
@@ -208,13 +218,13 @@ export const MovieHeader = styled.div`
   h2 {
     font-size: 0.9rem;
     font-weight: 400;
-    color: ${props => props.theme.gold};
+    color: ${(props) => props.theme.gold};
     margin-bottom: 0;
     margin-top: 0.25rem;
   }
 
   a {
-    color: ${props => props.theme.light};
+    color: ${(props) => props.theme.light};
   }
 
   @media (min-width: 600px) {
@@ -241,13 +251,13 @@ export const DetailsContainer = styled.div`
 `;
 
 export const Details = styled.div`
-  visibility: ${props => (props.hidden ? 'hidden' : 'visible')};
+  visibility: ${(props) => (props.hidden ? 'hidden' : 'visible')};
 
   h3 {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: ${props => props.theme.grayLight} !important;
+    color: ${(props) => props.theme.grayLight} !important;
     margin-bottom: 0.25rem !important;
   }
 
@@ -265,18 +275,18 @@ export const Description = styled.p`
   margin: 0;
   padding: 0.5rem 1.125rem 1.125rem;
   font-size: 0.9rem;
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
   line-height: 1.5;
 `;
 
 export const SimilarMoviesContainer = styled.section`
   padding: 1.125rem;
-  border-radius: ${props => props.theme.borderRadius};
-  background: ${props => props.theme.dark};
+  border-radius: ${(props) => props.theme.borderRadius};
+  background: ${(props) => props.theme.dark};
 
   p {
     margin-bottom: 0;
-    color: ${props => props.theme.grayLight};
+    color: ${(props) => props.theme.grayLight};
   }
 `;
 
@@ -303,8 +313,8 @@ export const SimilarMoviesGrid = styled.div`
 `;
 
 export const MovieThumbnail = styled.div`
-  border-radius: ${props => props.theme.borderRadius};
-  background: ${props => props.background_img};
+  border-radius: ${(props) => props.theme.borderRadius};
+  background: ${(props) => props.background_img};
   min-height: 150px;
   background-position: center;
   background-size: contain;
@@ -314,7 +324,7 @@ export const MovieThumbnail = styled.div`
 
 export const SimilarMoviesHeading = styled.h2`
   font-size: 1.25rem;
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
 `;
 
 export const IconContainer = styled.div`
@@ -343,12 +353,12 @@ export const IconContainer = styled.div`
 /* Icons */
 export const HeartIcon = styled(FaHeart)`
   font-size: 1.125rem;
-  color: ${props => (props.watchlisted ? props.theme.red : '#fff')};
+  color: ${(props) => (props.watchlisted ? props.theme.red : '#fff')};
   transition: color 250ms ease-in;
 `;
 
 export const CloseButton = styled(MdClose)`
-  color: ${props => props.theme.red};
+  color: ${(props) => props.theme.red};
   font-size: 2rem;
   position: absolute;
   right: 6px;

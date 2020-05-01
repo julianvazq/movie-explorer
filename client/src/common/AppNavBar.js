@@ -8,8 +8,8 @@ import { Badge } from 'reactstrap';
 import styled from 'styled-components';
 
 const Nav = styled.nav`
-  background: ${props => props.theme.gray};
-  color: ${props => props.theme.light};
+  background: ${(props) => props.theme.gray};
+  color: ${(props) => props.theme.light};
   height: 60px;
   width: 100%;
   position: fixed;
@@ -34,8 +34,8 @@ const LogoContainer = styled.div`
   font-size: 1.25rem;
   height: 37px;
   width: 42px;
-  background: ${props => props.theme.dark};
-  color: ${props => props.theme.gold};
+  background: ${(props) => props.theme.dark};
+  color: ${(props) => props.theme.gold};
 `;
 
 const NavList = styled.ul`
@@ -46,20 +46,20 @@ const NavList = styled.ul`
   margin-bottom: 0;
 
   a {
-    text-decoration-color: ${props => props.theme.gold};
+    text-decoration-color: ${(props) => props.theme.gold};
   }
 `;
 
 const NavItem = styled.li`
   padding: 0.75rem;
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
   font-weight: bold;
   letter-spacing: 1px;
   position: relative;
 `;
 
 const CustomBadge = styled(Badge)`
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
   background: hsl(46, 80%, 40%);
   vertical-align: baseline;
   padding-right: 0.6em;
@@ -74,16 +74,19 @@ const CustomBadge = styled(Badge)`
   right: -7px;
   display: flex;
   justify-content: center;
+
+  span {
+    transform: translateX(1px);
+  }
 `;
 
 const GithubIcon = styled(FaGithub)`
-  color: ${props => props.theme.light};
+  color: ${(props) => props.theme.light};
   font-size: 1.25rem;
   margin-left: 2rem;
 `;
 
-const AppNavbar = props => {
-  const [isOpen, setIsOpen] = useState(false);
+const AppNavbar = () => {
   const { watchlist } = useSelector(watchlistState);
 
   return (
@@ -92,7 +95,6 @@ const AppNavbar = props => {
         <Link to='/'>
           <LogoContainer>
             <GiPopcorn />
-            {/* <FaFilm /> */}
           </LogoContainer>
         </Link>
         <NavList>
