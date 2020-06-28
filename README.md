@@ -4,7 +4,7 @@ Movie Explorer lets you discover thousands of movies, and allows you to add them
 
 The design for Movie Explorer was created from scratch based on multiple paper wireframes.
 
-**Skills this project helped me improve include**:
+**Things I implemented / tech I used**:
 - React & Redux 
 - Node & Express
 - UX/UI Design
